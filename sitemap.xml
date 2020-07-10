@@ -1,55 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url>
      <loc>https://yichaoo.github.io/index.html</loc>
-     <lastmod>2020-07-08</lastmod>
+     <lastmod>2020-07-10</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://yichaoo.github.io/Markdown%E6%95%99%E7%A8%8B.html</loc>
-     <lastmod>2020-07-08</lastmod>
+     <lastmod>2020-07-10</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://yichaoo.github.io/%E9%99%84%E5%BD%95%EF%BC%9A%E5%88%9B%E5%A7%8B%E4%BA%BA%20John%20Gruber%20%E7%9A%84%20Markdown%20%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95%E8%AF%B4%E6%98%8E.html</loc>
-     <lastmod>2020-07-08</lastmod>
+     <lastmod>2020-07-10</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
-     <loc>https://yichaoo.github.io/01MKDocs/00Hello%20mkdocs.html</loc>
-     <lastmod>2020-07-08</lastmod>
+     <loc>https://yichaoo.github.io/01.MKDocs/00Hello%20mkdocs.html</loc>
+     <lastmod>2020-07-10</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
-     <loc>https://yichaoo.github.io/01MKDocs/01MkDocs.html</loc>
-     <lastmod>2020-07-08</lastmod>
+     <loc>https://yichaoo.github.io/01.MKDocs/01MkDocs.html</loc>
+     <lastmod>2020-07-10</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
-     <loc>https://yichaoo.github.io/01MKDocs/02MKDocConfigration.html</loc>
-     <lastmod>2020-07-08</lastmod>
+     <loc>https://yichaoo.github.io/01.MKDocs/02MKDocConfigration.html</loc>
+     <lastmod>2020-07-10</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
-     <loc>https://yichaoo.github.io/01MKDocs/03Material%20for%20MkDocs%20Getting%20started.html</loc>
-     <lastmod>2020-07-08</lastmod>
+     <loc>https://yichaoo.github.io/01.MKDocs/03Material%20for%20MkDocs%20Getting%20started.html</loc>
+     <lastmod>2020-07-10</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
-     <loc>https://yichaoo.github.io/01MKDocs/04CMD%20Markdown.html</loc>
-     <lastmod>2020-07-08</lastmod>
+     <loc>https://yichaoo.github.io/01.MKDocs/04CMD%20Markdown.html</loc>
+     <lastmod>2020-07-10</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
-     <loc>https://yichaoo.github.io/01MKDocs/05%E6%90%AD%E5%BB%BAGitPages.html</loc>
-     <lastmod>2020-07-08</lastmod>
+     <loc>https://yichaoo.github.io/01.MKDocs/05%E6%90%AD%E5%BB%BAGitPages.html</loc>
+     <lastmod>2020-07-10</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
-     <loc>https://yichaoo.github.io/01MKDocs/06color.html</loc>
-     <lastmod>2020-07-08</lastmod>
+     <loc>https://yichaoo.github.io/01.MKDocs/06color.html</loc>
+     <lastmod>2020-07-10</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
-     <loc>https://yichaoo.github.io/02Demo/2.CentOS7%20%E5%AE%B9%E5%99%A8%E7%8E%AF%E5%A2%83%E5%88%A0%E9%99%A4%E9%BB%98%E8%AE%A4%E7%BD%91%E6%A1%A5Docker0%EF%BC%8C%E9%87%87%E7%94%A8%E8%87%AA%E5%AE%9A%E4%B9%89%E7%BD%91%E6%A1%A5%E8%BF%9B%E8%A1%8C%E9%80%9A%E8%AE%AF.html</loc>
-     <lastmod>2020-07-08</lastmod>
+     <loc>https://yichaoo.github.io/02.Linux/1.linux-demo.html</loc>
+     <lastmod>2020-07-10</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
-     <loc>https://yichaoo.github.io/02Demo/linux/1.linux-demo.html</loc>
-     <lastmod>2020-07-08</lastmod>
+     <loc>https://yichaoo.github.io/03.Docker/01DockerHome.html</loc>
+     <lastmod>2020-07-10</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
-     <loc>https://yichaoo.github.io/02Demo/linux/2.linux-demo%20copy.html</loc>
-     <lastmod>2020-07-08</lastmod>
+     <loc>https://yichaoo.github.io/03.Docker/02Docker%20Desktop-Windows.html</loc>
+     <lastmod>2020-07-10</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://yichaoo.github.io/03.Docker/%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95/2.CentOS7%20%E5%AE%B9%E5%99%A8%E7%8E%AF%E5%A2%83%E5%88%A0%E9%99%A4%E9%BB%98%E8%AE%A4%E7%BD%91%E6%A1%A5Docker0%EF%BC%8C%E9%87%87%E7%94%A8%E8%87%AA%E5%AE%9A%E4%B9%89%E7%BD%91%E6%A1%A5%E8%BF%9B%E8%A1%8C%E9%80%9A%E8%AE%AF.html</loc>
+     <lastmod>2020-07-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
 </urlset>
