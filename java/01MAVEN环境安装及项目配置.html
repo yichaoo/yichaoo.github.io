@@ -11,7 +11,7 @@
         <meta name="description" content="技术文档和填坑手册">
       
       
-        <link rel="canonical" href="https://yichaoo.github.io/java/JavaWeb%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%E5%88%B0tomcat.html">
+        <link rel="canonical" href="https://yichaoo.github.io/java/01MAVEN%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85%E5%8F%8A%E9%A1%B9%E7%9B%AE%E9%85%8D%E7%BD%AE.html">
       
       
         <meta name="author" content="Liu Yichao">
@@ -21,7 +21,7 @@
     
     
       
-        <title>JavaWeb项目部署到tomcat - 技术文档及填坑手册</title>
+        <title>MAVEN环境安装及IDEA项目配置 - 技术文档及填坑手册</title>
       
     
     
@@ -64,7 +64,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#javawebtomcat" class="md-skip">
+        <a href="#mavenidea" class="md-skip">
           跳转至
         </a>
       
@@ -92,7 +92,7 @@
           </span>
           <span class="md-header-nav__topic md-ellipsis">
             
-              JavaWeb项目部署到tomcat
+              MAVEN环境安装及IDEA项目配置
             
           </span>
         </div>
@@ -218,7 +218,7 @@
   
     <li class="md-tabs__item">
       
-        <a href="JavaWeb%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%E5%88%B0tomcat.html" class="md-tabs__link md-tabs__link--active">
+        <a href="01MAVEN%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85%E5%8F%8A%E9%A1%B9%E7%9B%AE%E9%85%8D%E7%BD%AE.html" class="md-tabs__link md-tabs__link--active">
           Java
         </a>
       
@@ -684,14 +684,14 @@
     
     
       <label class="md-nav__link md-nav__link--active" for="__toc">
-        JavaWeb项目部署到tomcat
+        MAVEN环境安装及IDEA项目配置
         <span class="md-nav__icon md-icon">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 9h14V7H3v2m0 4h14v-2H3v2m0 4h14v-2H3v2m16 0h2v-2h-2v2m0-10v2h2V7h-2m0 6h2v-2h-2v2z"/></svg>
         </span>
       </label>
     
-    <a href="JavaWeb%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%E5%88%B0tomcat.html" title="JavaWeb项目部署到tomcat" class="md-nav__link md-nav__link--active">
-      JavaWeb项目部署到tomcat
+    <a href="01MAVEN%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85%E5%8F%8A%E9%A1%B9%E7%9B%AE%E9%85%8D%E7%BD%AE.html" title="MAVEN环境安装及IDEA项目配置" class="md-nav__link md-nav__link--active">
+      MAVEN环境安装及IDEA项目配置
     </a>
     
       
@@ -710,58 +710,30 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    一、环境配置
+  <a href="#maven" class="md-nav__link">
+    配置MAVEN环境
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    二、创建原型示例项目.
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#ideatomcat" class="md-nav__link">
-    三、IDEA配置Tomcat服务器
-  </a>
-  
-    <nav class="md-nav" aria-label="三、IDEA配置Tomcat服务器">
+    <nav class="md-nav" aria-label="配置MAVEN环境">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#edit-configurationstomcat" class="md-nav__link">
-    创建完项目之后，点击工具栏Edit Configurations，配置Tomcat,默认无任何配置
+  <a href="#maven_1" class="md-nav__link">
+    下载、解压maven包
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#tomcat-server-local" class="md-nav__link">
-    点击加号，添加新配置：Tomcat Server--&gt;Local
+  <a href="#_1" class="md-nav__link">
+    配置系统环境变量
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#tomcattomcat-85" class="md-nav__link">
-    配置Tomcat服务器(提前从官网下载Tomcat 版本8.5+到本地目录),选择根目录即可
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#tomcatjavaweb8124" class="md-nav__link">
-    Tomcat服务器添加完成之后，再配置java版本及web服务访问端口(与本机不冲突即可，本示例用8124端口)
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#tomcat-artifactwar" class="md-nav__link">
-    配置tomcat 启动项目的Artifact,采用war包的方式进行部署
+  <a href="#mavenmvn-helpsystem" class="md-nav__link">
+    Maven查看配置变量命令：mvn help:system
   </a>
   
 </li>
@@ -772,16 +744,63 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#maven" class="md-nav__link">
-    四、Maven打包构建项目
+  <a href="#idea" class="md-nav__link">
+    IDEA全局配置
   </a>
+  
+    <nav class="md-nav" aria-label="IDEA全局配置">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#maven_2" class="md-nav__link">
+    配置 Maven主目录
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jdk" class="md-nav__link">
+    配置项目JDK
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#web" class="md-nav__link">
-    五、启动web项目
+  <a href="#spring-boot" class="md-nav__link">
+    项目启动（Spring Boot)
   </a>
+  
+    <nav class="md-nav" aria-label="项目启动（Spring Boot)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    导入、构建项目
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#webredismysql" class="md-nav__link">
+    配置web服务端口，Redis地址，Mysql地址账号
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#idea-tomcat" class="md-nav__link">
+    启动IDEA Tomcat
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -798,8 +817,8 @@
 
 
   <li class="md-nav__item">
-    <a href="MAVEN%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85%E5%8F%8A%E9%A1%B9%E7%9B%AE%E9%85%8D%E7%BD%AE.html" title="MAVEN环境安装及IDEA项目配置" class="md-nav__link">
-      MAVEN环境安装及IDEA项目配置
+    <a href="02JavaWeb%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%E5%88%B0tomcat.html" title="JavaWeb项目部署到tomcat" class="md-nav__link">
+      JavaWeb项目部署到tomcat
     </a>
   </li>
 
@@ -835,58 +854,30 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    一、环境配置
+  <a href="#maven" class="md-nav__link">
+    配置MAVEN环境
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    二、创建原型示例项目.
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#ideatomcat" class="md-nav__link">
-    三、IDEA配置Tomcat服务器
-  </a>
-  
-    <nav class="md-nav" aria-label="三、IDEA配置Tomcat服务器">
+    <nav class="md-nav" aria-label="配置MAVEN环境">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#edit-configurationstomcat" class="md-nav__link">
-    创建完项目之后，点击工具栏Edit Configurations，配置Tomcat,默认无任何配置
+  <a href="#maven_1" class="md-nav__link">
+    下载、解压maven包
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#tomcat-server-local" class="md-nav__link">
-    点击加号，添加新配置：Tomcat Server--&gt;Local
+  <a href="#_1" class="md-nav__link">
+    配置系统环境变量
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#tomcattomcat-85" class="md-nav__link">
-    配置Tomcat服务器(提前从官网下载Tomcat 版本8.5+到本地目录),选择根目录即可
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#tomcatjavaweb8124" class="md-nav__link">
-    Tomcat服务器添加完成之后，再配置java版本及web服务访问端口(与本机不冲突即可，本示例用8124端口)
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#tomcat-artifactwar" class="md-nav__link">
-    配置tomcat 启动项目的Artifact,采用war包的方式进行部署
+  <a href="#mavenmvn-helpsystem" class="md-nav__link">
+    Maven查看配置变量命令：mvn help:system
   </a>
   
 </li>
@@ -897,16 +888,63 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#maven" class="md-nav__link">
-    四、Maven打包构建项目
+  <a href="#idea" class="md-nav__link">
+    IDEA全局配置
   </a>
+  
+    <nav class="md-nav" aria-label="IDEA全局配置">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#maven_2" class="md-nav__link">
+    配置 Maven主目录
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jdk" class="md-nav__link">
+    配置项目JDK
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#web" class="md-nav__link">
-    五、启动web项目
+  <a href="#spring-boot" class="md-nav__link">
+    项目启动（Spring Boot)
   </a>
+  
+    <nav class="md-nav" aria-label="项目启动（Spring Boot)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    导入、构建项目
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#webredismysql" class="md-nav__link">
+    配置web服务端口，Redis地址，Mysql地址账号
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#idea-tomcat" class="md-nav__link">
+    启动IDEA Tomcat
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -922,7 +960,7 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/yichaoo/index/edit/master/docs/java/JavaWeb项目部署到tomcat.md" title="编辑此页" class="md-content__button md-icon">
+                  <a href="https://github.com/yichaoo/index/edit/master/docs/java/01MAVEN环境安装及项目配置.md" title="编辑此页" class="md-content__button md-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
                   </a>
                 
@@ -930,93 +968,67 @@
                   
                 
                 
-                <h1 id="javawebtomcat">JavaWeb项目部署到tomcat<a class="headerlink" href="#javawebtomcat" title="Permanent link">&para;</a></h1>
-<h3 id="_1">一、环境配置<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
-<p>开发IDE:安装IntelliJ IDEA 2020.1最终版</p>
-<p>JDK版本:1.8</p>
-<p>Maven版本:3.6+</p>
-<p>环境配置要求:</p>
-<ul>
-<li>配置Java和Mvn系统环境变量</li>
-<li>配置Maven镜像和仓库目录</li>
-<li>IDEA项目导入全局配置及SDK版本配置</li>
-</ul>
-<p><img alt="image-20200729164242018" src="pics/image-20200729164242018.png" /></p>
-<h3 id="_2">二、创建原型示例项目.<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
-<p>相关配置完成之后,打开IDEA,按操作顺序创建新的webapp项目,新项目采用IDEA自带的原型示例:<code>maven-archetype-webapp</code>,点击下一步,</p>
-<p><img alt="image-20200729164714543" src="pics/image-20200729164714543.png" /></p>
-<p>填写项目名称和项目存放地址，配置项目GroupId、ArticfactId以及版本Version,点击下一步</p>
-<p><img alt="image-20200729165347943" src="pics/image-20200729165347943.png" /></p>
-<p>配置Maven目录及相关配置，默认会继承全局配置，可以不做任何更改，点击完成</p>
-<p><img alt="image-20200729165649603" src="pics/image-20200729165649603.png" /></p>
-<p>项目创建之后，打开工具栏Project Stucture按钮,打开Project Settings----&gt;Modules并配置项目目录属性</p>
-<p><strong>新建java和resources文件夹</strong></p>
-<p>把java文件夹设置为Sources，用于保存java代码，Mark as设置完成后文件夹会变成蓝色
-recources文件夹：一般用来存放一些资源文件,Mark之后文件夹变成紫色
-webapp文件夹：用来存放web配置文件以及jsp页面等</p>
-<p>注：target目录是在maven打包的时候才会生成的，一开始是没有这个目录的，属于excluded目录</p>
-<p><img alt="image-20200729170358615" src="pics/image-20200729170358615.png" /></p>
-<p>目录配置完成后的项目结构如图所示:</p>
-<p><img alt="image-20200729171642807" src="pics/image-20200729171642807.png" /></p>
-<h3 id="ideatomcat">三、IDEA配置Tomcat服务器<a class="headerlink" href="#ideatomcat" title="Permanent link">&para;</a></h3>
-<ol>
-<li>
-<h5 id="edit-configurationstomcat">创建完项目之后，点击工具栏Edit Configurations，配置Tomcat,默认无任何配置<a class="headerlink" href="#edit-configurationstomcat" title="Permanent link">&para;</a></h5>
-</li>
-</ol>
-<p><img alt="image-20200729172644232" src="pics/image-20200729172644232.png" /></p>
-<ol>
-<li>
-<h5 id="tomcat-server-local">点击加号，添加新配置：Tomcat Server&rarr;Local<a class="headerlink" href="#tomcat-server-local" title="Permanent link">&para;</a></h5>
-</li>
-</ol>
-<p><img alt="image-20200729172910497" src="pics/image-20200729172910497.png" /></p>
-<ol>
-<li>
-<h5 id="tomcattomcat-85">配置Tomcat服务器(提前从官网下载Tomcat 版本8.5+到本地目录),选择根目录即可<a class="headerlink" href="#tomcattomcat-85" title="Permanent link">&para;</a></h5>
-</li>
-</ol>
-<p><img alt="image-20200729172354937" src="pics/image-20200729172354937.png" /></p>
-<ol>
-<li>
-<h5 id="tomcatjavaweb8124">Tomcat服务器添加完成之后，再配置java版本及web服务访问端口(与本机不冲突即可，本示例用8124端口)<a class="headerlink" href="#tomcatjavaweb8124" title="Permanent link">&para;</a></h5>
-</li>
-</ol>
-<p><img alt="image-20200729173556955" src="pics/image-20200729173556955.png" /></p>
-<ol>
-<li>
-<h5 id="tomcat-artifactwar">配置tomcat 启动项目的Artifact,采用war包的方式进行部署<a class="headerlink" href="#tomcat-artifactwar" title="Permanent link">&para;</a></h5>
-</li>
-</ol>
-<p><img alt="image-20200729173703366" src="pics/image-20200729173703366.png" /></p>
-<h3 id="maven">四、Maven打包构建项目<a class="headerlink" href="#maven" title="Permanent link">&para;</a></h3>
-<ol>
-<li>
-<p>打开右侧Maven窗口，点击Lifecycle---&gt;verify---双击或运行Run Maven build</p>
-</li>
-<li>
-<p>验证项目包是否能正常编译和构建</p>
-</li>
-</ol>
-<p><img alt="image-20200729181134803" src="pics/image-20200729181134803.png" /></p>
-<ol>
-<li>控制台输出日志显示成功构建war包的路径</li>
-</ol>
-<p><img alt="image-20200729184603499" src="pics/image-20200729184603499.png" /></p>
-<ol>
-<li>项目的target目录会显示构建好的相关文件</li>
-</ol>
-<p><img alt="image-20200729181223365" src="pics/image-20200729181223365.png" /></p>
-<h3 id="web">五、启动web项目<a class="headerlink" href="#web" title="Permanent link">&para;</a></h3>
-<ol>
-<li>将生成好的war文件复制到tomcat下的webaps目录下</li>
-</ol>
-<p><img alt="image-20200729181307928" src="pics/image-20200729181307928.png" /></p>
-<ol>
-<li>点击工具栏三角形启动Tomcat 服务器，会自动启动之前配置好的浏览器，并打开访问地址,成功显示web页面.</li>
-</ol>
-<p><img alt="image-20200729185134653" src="pics/image-20200729185134653.png" /></p>
-<p><img alt="image-20200729181433219" src="pics/image-20200729181433219.png" /></p>
+                <h1 id="mavenidea">MAVEN环境安装及IDEA项目配置<a class="headerlink" href="#mavenidea" title="Permanent link">&para;</a></h1>
+<h3 id="maven">配置MAVEN环境<a class="headerlink" href="#maven" title="Permanent link">&para;</a></h3>
+<h4 id="maven_1">下载、解压maven包<a class="headerlink" href="#maven_1" title="Permanent link">&para;</a></h4>
+<p>windowst系统下载二进制压缩包：<a href="http://maven.apache.org/download.cgi">Maven最新版下地地址</a>、<a href="https://archive.apache.org/dist/maven/maven-3/3.6.0/binaries/">3.6版下载地址</a></p>
+<p>将下载压缩包保存到IDEA的安装目录(非必须，根据自己的习惯来选择目录),打开压缩包，选择里面的根路径进行解压。</p>
+<p><img alt="image-20200723130435698" src="pics/image-20200723130435698.png" />
+解压之后的文件目录如下：</p>
+<p><img alt="image-20200723180818333" src="pics/image-20200723180818333.png" /></p>
+<p>配置maven镜像地址和本地仓库路径 :</p>
+<p><img alt="image-20200723130755952" src="pics/image-20200723130755952.png" /></p>
+<p><img alt="image-20200723130947173" src="pics/image-20200723130947173.png" /></p>
+<div class="highlight"><pre><span></span><code><span class="nt">&lt;mirror&gt;</span>
+        <span class="nt">&lt;id&gt;</span>nexus-aliyun<span class="nt">&lt;/id&gt;</span>
+        <span class="nt">&lt;mirrorOf&gt;</span>*<span class="nt">&lt;/mirrorOf&gt;</span>
+        <span class="nt">&lt;name&gt;</span>Nexus aliyun<span class="nt">&lt;/name&gt;</span>
+        <span class="nt">&lt;url&gt;</span>http://maven.aliyun.com/nexus/content/groups/public<span class="nt">&lt;/url&gt;</span>
+    <span class="nt">&lt;/mirror&gt;</span>
+</code></pre></div>
+
+<h4 id="_1">配置系统环境变量<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h4>
+<p>配置MAVEN_HOME</p>
+<p>安装目录假设为：D:\maven\apache-maven-3.5.2，添加maven的环境变量，变量名为：MAVEN_HOM；值为：  D:\maven\apache-maven-3.5.2；</p>
+<p><img alt="image-20200723142239388" src="pics/image-20200723142239388.png" />
+配置path变量，加上如下值：</p>
+<p><code>;%MAVEN_HOM%\bin;</code></p>
+<p><img alt="image-20200723171451502" src="pics/image-20200723171451502.png" /></p>
+<p>打开cmd输入mvn -v命令，查看maven环境变量是否生效</p>
+<p><img alt="image-20200723143838689" src="pics/image-20200723143838689.png" /></p>
+<h4 id="mavenmvn-helpsystem">Maven查看配置变量命令：mvn help:system<a class="headerlink" href="#mavenmvn-helpsystem" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code>    mvn help:system
+</code></pre></div>
+
+<p>该命令会打印出所有的Java系统属性和环境变量,并下载相关jar包;</p>
+<p><img alt="image-20200723131905776" src="pics/image-20200723131905776.png" /></p>
+<h3 id="idea">IDEA全局配置<a class="headerlink" href="#idea" title="Permanent link">&para;</a></h3>
+<h4 id="maven_2">配置 Maven主目录<a class="headerlink" href="#maven_2" title="Permanent link">&para;</a></h4>
+<p>启动IDEA,打开界面右下角Configure菜单第1项Settings.</p>
+<p>搜索Mavens配置，选择Build目录下的Maven,更改Maven主目录路径，选择之前解压的路径，以及配置路径，本地仓库路径会自动从配置文件加载</p>
+<p><img alt="image-20200723152102114" src="pics/image-20200723152102114.png" /></p>
+<h4 id="jdk">配置项目JDK<a class="headerlink" href="#jdk" title="Permanent link">&para;</a></h4>
+<p>启动IDEA,打开界面右下角Configure菜单第3项Structure for new Projects.</p>
+<p><img alt="image-20200723175811020" src="pics/image-20200723175811020.png" /></p>
+<p>进入平台配置选择SDKs,添加1.8版本jdk，选择安装主路径即可</p>
+<p><img alt="image-20200723175632174" src="pics/image-20200723175632174.png" /></p>
+<p>再选择Project配置，选择刚添加的1.8版本jdk</p>
+<p><img alt="image-20200723175508223" src="pics/image-20200723175508223.png" /></p>
+<h3 id="spring-boot">项目启动（Spring Boot)<a class="headerlink" href="#spring-boot" title="Permanent link">&para;</a></h3>
+<h4 id="_2">导入、构建项目<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h4>
+<p>启动IDEA,选择Open or Import 菜单导入项目(提前将项目克隆到本地https://gitee.com/jldev/jianghan_university.git)</p>
+<p><img alt="image-20200723175035644" src="pics/image-20200723175035644.png" /></p>
+<p>通过maven安装项目依赖包,进入IDEA,打开右侧maven工具窗口，点击Lifecycle--install，通过输出日志可以看到下载地址已经是之前配置的阿里仓库地址；依赖全部下载完成后，提示Build SUCCESS代表通过Maven构建成功，依次将其它模块进行构建(web模块).</p>
+<p><img alt="image-20200723162729309" src="pics/image-20200723162729309.png" /></p>
+<h4 id="webredismysql">配置web服务端口，Redis地址，Mysql地址账号<a class="headerlink" href="#webredismysql" title="Permanent link">&para;</a></h4>
+<p><img alt="image-20200723183632769" src="pics/image-20200723183632769.png" /></p>
+<h4 id="idea-tomcat">启动IDEA Tomcat<a class="headerlink" href="#idea-tomcat" title="Permanent link">&para;</a></h4>
+<p>配置完成之后,点击右上工具样启动按钮，运行项目。</p>
+<p><img alt="image-20200723184559223" src="pics/image-20200723184559223.png" /></p>
+<p>等待一会，查看输出记录 [INFO] - Tomcat started on port(s): 3001 (http)，代表项目成功启动</p>
+<p><img alt="image-20200723184758825" src="pics/image-20200723184758825.png" /></p>
+<p>打开浏览器输入http://localhost:3001,页面正常打开。</p>
+<p><img alt="image-20200804171057149" src="pics/image-20200804171057149.png" /></p>
                 
                   
                     
@@ -1025,7 +1037,7 @@ webapp文件夹：用来存放web配置文件以及jsp页面等</p>
 <div class="md-source-date">
   <small>
     
-      最后更新: <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2020年7月29日</span>
+      最后更新: <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2020年8月4日</span>
     
   </small>
 </div>
@@ -1063,13 +1075,13 @@ webapp文件夹：用来存放web配置文件以及jsp页面等</p>
           </a>
         
         
-          <a href="MAVEN%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85%E5%8F%8A%E9%A1%B9%E7%9B%AE%E9%85%8D%E7%BD%AE.html" title="MAVEN环境安装及IDEA项目配置" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="02JavaWeb%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%E5%88%B0tomcat.html" title="JavaWeb项目部署到tomcat" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-footer-nav__title">
               <div class="md-ellipsis">
                 <span class="md-footer-nav__direction">
                   下一页
                 </span>
-                MAVEN环境安装及IDEA项目配置
+                JavaWeb项目部署到tomcat
               </div>
             </div>
             <div class="md-footer-nav__button md-icon">
