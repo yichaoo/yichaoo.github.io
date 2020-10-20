@@ -1,0 +1,1820 @@
+
+
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="DevOps从入门到躺坑">
+      
+      
+        <link rel="canonical" href="https://yichaoo.github.io/2.Docker/Docker-Start-Windows.html">
+      
+      
+        <meta name="author" content="Liu Yichao">
+      
+      <link rel="shortcut icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.4.0">
+    
+    
+      
+        <title>Get started with Docker for Windows - DevOps从入门到躺坑</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.fe0cca5b.min.css">
+      
+        <link rel="stylesheet" href="../assets/stylesheets/palette.a46bcfb3.min.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#7e57c2">
+      
+    
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="deep-purple" data-md-color-accent="deep-purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#get-started-with-docker-for-windows" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href="https://yichaoo.github.io/" title="DevOps从入门到躺坑" class="md-header-nav__button md-logo" aria-label="DevOps从入门到躺坑">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            DevOps从入门到躺坑
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              Get started with Docker for Windows
+            
+          </span>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active">
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header-nav__source">
+        
+<a href="https://github.com/yichaoo/index/" title="前往 GitHub 仓库" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    yichaoo/index
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+        
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="https://yichaoo.github.io/" title="DevOps从入门到躺坑" class="md-nav__button md-logo" aria-label="DevOps从入门到躺坑">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    DevOps从入门到躺坑
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/yichaoo/index/" title="前往 GitHub 仓库" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    yichaoo/index
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-1" type="checkbox" id="nav-1">
+    
+    <label class="md-nav__link" for="nav-1">
+      1.Java
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="1.Java" data-md-level="1">
+      <label class="md-nav__title" for="nav-1">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        1.Java
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../1.Java/01MAVEN%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85%E5%8F%8A%E9%A1%B9%E7%9B%AE%E9%85%8D%E7%BD%AE.html" title="MAVEN环境安装及IDEA项目配置" class="md-nav__link">
+      MAVEN环境安装及IDEA项目配置
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../1.Java/02JavaWeb%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%E5%88%B0tomcat.html" title="JavaWeb项目部署到tomcat" class="md-nav__link">
+      JavaWeb项目部署到tomcat
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../1.Java/Deploy.html" title="Spring Boot打包部署篇" class="md-nav__link">
+      Spring Boot打包部署篇
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../1.Java/Maven.html" title="Welcome to Apache Maven" class="md-nav__link">
+      Welcome to Apache Maven
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      1.Linux
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="1.Linux" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        1.Linux
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../1.Linux/1.linux-demo.html" title="Linux 基本命令手册" class="md-nav__link">
+      Linux 基本命令手册
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" checked>
+    
+    <label class="md-nav__link" for="nav-3">
+      2.Docker
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="2.Docker" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        2.Docker
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="01DockerHome.html" title="01.开始Docker" class="md-nav__link">
+      01.开始Docker
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="02Docker%20Desktop-Windows.html" title="02.Docker Desktop-Window" class="md-nav__link">
+      02.Docker Desktop-Window
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Docker%20Tutorials%20and%20Labs.html" title="Docker Tutorials and Labs" class="md-nav__link">
+      Docker Tutorials and Labs
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Get started with Docker for Windows
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 9h14V7H3v2m0 4h14v-2H3v2m0 4h14v-2H3v2m16 0h2v-2h-2v2m0-10v2h2V7h-2m0 6h2v-2h-2v2z"/></svg>
+        </span>
+      </label>
+    
+    <a href="Docker-Start-Windows.html" title="Get started with Docker for Windows" class="md-nav__link md-nav__link--active">
+      Get started with Docker for Windows
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#test-your-installation" class="md-nav__link">
+    Test your installation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#explore-the-application" class="md-nav__link">
+    Explore the application
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docker-settings-dialog" class="md-nav__link">
+    Docker Settings dialog
+  </a>
+  
+    <nav class="md-nav" aria-label="Docker Settings dialog">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#general" class="md-nav__link">
+    General
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resources" class="md-nav__link">
+    Resources
+  </a>
+  
+    <nav class="md-nav" aria-label="Resources">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#advanced" class="md-nav__link">
+    ADVANCED
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#file-sharing" class="md-nav__link">
+    FILE SHARING
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shared-folders-on-demand" class="md-nav__link">
+    SHARED FOLDERS ON DEMAND
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#proxies" class="md-nav__link">
+    PROXIES
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#network" class="md-nav__link">
+    NETWORK
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wsl-integration" class="md-nav__link">
+    WSL INTEGRATION
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker-engine" class="md-nav__link">
+    Docker Engine
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#command-line" class="md-nav__link">
+    Command Line
+  </a>
+  
+    <nav class="md-nav" aria-label="Command Line">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#experimental-features" class="md-nav__link">
+    EXPERIMENTAL FEATURES
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kubernetes" class="md-nav__link">
+    Kubernetes
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reset" class="md-nav__link">
+    Reset
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#troubleshoot" class="md-nav__link">
+    Troubleshoot
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#switch-between-windows-and-linux-containers" class="md-nav__link">
+    Switch between Windows and Linux containers
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dashboard" class="md-nav__link">
+    Dashboard
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docker-hub" class="md-nav__link">
+    Docker Hub
+  </a>
+  
+    <nav class="md-nav" aria-label="Docker Hub">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#two-factor-authentication" class="md-nav__link">
+    Two-factor authentication
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#adding-tls-certificates" class="md-nav__link">
+    Adding TLS certificates
+  </a>
+  
+    <nav class="md-nav" aria-label="Adding TLS certificates">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-do-i-add-custom-ca-certificates" class="md-nav__link">
+    How do I add custom CA certificates?
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-do-i-add-client-certificates" class="md-nav__link">
+    How do I add client certificates?
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#where-to-go-next" class="md-nav__link">
+    Where to go next
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Play%20with%20Docker%20Classroom.html" title="Play with Docker Classroom" class="md-nav__link">
+      Play with Docker Classroom
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3-6" type="checkbox" id="nav-3-6">
+    
+    <label class="md-nav__link" for="nav-3-6">
+      Docker For Developers
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Docker For Developers" data-md-level="2">
+      <label class="md-nav__title" for="nav-3-6">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        Docker For Developers
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Docker-For-Developers/01Docker%20for%20Beginners%20-%20Linux.html" title="Docker for Beginners - Linux" class="md-nav__link">
+      Docker for Beginners - Linux
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Docker-For-Developers/02Application%20Containerization%20and%20Microservice%20Orchestration.html" title="Application Containerization and Microservice Orchestration" class="md-nav__link">
+      Application Containerization and Microservice Orchestration
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3-7" type="checkbox" id="nav-3-7">
+    
+    <label class="md-nav__link" for="nav-3-7">
+      笔记
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="笔记" data-md-level="2">
+      <label class="md-nav__title" for="nav-3-7">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        笔记
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="%E7%AC%94%E8%AE%B0/%E6%9C%9D%E5%A4%95%E7%AC%94%E8%AE%B0.html" title="朝夕笔记" class="md-nav__link">
+      朝夕笔记
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3-8" type="checkbox" id="nav-3-8">
+    
+    <label class="md-nav__link" for="nav-3-8">
+      踩坑记录
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="踩坑记录" data-md-level="2">
+      <label class="md-nav__title" for="nav-3-8">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        踩坑记录
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95/CentOS7%20%E5%AE%B9%E5%99%A8%E7%8E%AF%E5%A2%83%E5%88%A0%E9%99%A4%E9%BB%98%E8%AE%A4%E7%BD%91%E6%A1%A5Docker0%EF%BC%8C%E9%87%87%E7%94%A8%E8%87%AA%E5%AE%9A%E4%B9%89%E7%BD%91%E6%A1%A5%E8%BF%9B%E8%A1%8C%E9%80%9A%E8%AE%AF.html" title="CentOS7 容器环境删除默认网桥Docker0，采用自定义网桥进行通讯" class="md-nav__link">
+      CentOS7 容器环境删除默认网桥Docker0，采用自定义网桥进行通讯
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      2.SpringBoot
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="2.SpringBoot" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        2.SpringBoot
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2.SpringBoot/index.html" title="Spring目录" class="md-nav__link">
+      Spring目录
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2.SpringBoot/Accessing%20Data%20with%20JPA.html" title="Accessing Data with JPA" class="md-nav__link">
+      Accessing Data with JPA
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2.SpringBoot/QuickStart.html" title="Spring Quickstart Guide" class="md-nav__link">
+      Spring Quickstart Guide
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+    
+    <label class="md-nav__link" for="nav-5">
+      3.K8S
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="3.K8S" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        3.K8S
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../3.K8S/home.html" title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
+    
+    <label class="md-nav__link" for="nav-6">
+      4.CI&CD
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="4.CI&CD" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        4.CI&CD
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../4.CI%26CD/Jenkins.html" title="Jenkins" class="md-nav__link">
+      Jenkins
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
+    
+    <label class="md-nav__link" for="nav-7">
+      文档附录
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="文档附录" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        文档附录
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../%E6%96%87%E6%A1%A3%E9%99%84%E5%BD%95/index.html" title="Markdown介绍" class="md-nav__link">
+      Markdown介绍
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../%E6%96%87%E6%A1%A3%E9%99%84%E5%BD%95/00Markdown%E6%95%99%E7%A8%8B.html" title="Markdown教程" class="md-nav__link">
+      Markdown教程
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../%E6%96%87%E6%A1%A3%E9%99%84%E5%BD%95/01Mkdocs%E4%BB%8B%E7%BB%8D.html" title="MkDocs介绍" class="md-nav__link">
+      MkDocs介绍
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../%E6%96%87%E6%A1%A3%E9%99%84%E5%BD%95/02MkDocs%E5%AE%98%E7%BD%91.html" title="MkDocs官网" class="md-nav__link">
+      MkDocs官网
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../%E6%96%87%E6%A1%A3%E9%99%84%E5%BD%95/03MkDocConfigration.html" title="MkDoc Configuration" class="md-nav__link">
+      MkDoc Configuration
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../%E6%96%87%E6%A1%A3%E9%99%84%E5%BD%95/04Material%20for%20MkDocs%20Getting%20started.html" title="Material for MkDocs Getting started" class="md-nav__link">
+      Material for MkDocs Getting started
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../%E6%96%87%E6%A1%A3%E9%99%84%E5%BD%95/05%E6%90%AD%E5%BB%BAGitPages.html" title="基于mkdocs-material搭建个人静态博客(含支持的markdown语法)" class="md-nav__link">
+      基于mkdocs-material搭建个人静态博客(含支持的markdown语法)
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../%E6%96%87%E6%A1%A3%E9%99%84%E5%BD%95/06CMD%20Markdown.html" title="欢迎使用 Cmd Markdown 编辑阅读器" class="md-nav__link">
+      欢迎使用 Cmd Markdown 编辑阅读器
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../%E6%96%87%E6%A1%A3%E9%99%84%E5%BD%95/%E9%99%84%E5%BD%95%EF%BC%9A%E5%88%9B%E5%A7%8B%E4%BA%BA%20John%20Gruber%20%E7%9A%84%20Markdown%20%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95%E8%AF%B4%E6%98%8E.html" title="附录：创始人 John Gruber 的 Markdown 基础语法说明" class="md-nav__link">
+      附录：创始人 John Gruber 的 Markdown 基础语法说明
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#test-your-installation" class="md-nav__link">
+    Test your installation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#explore-the-application" class="md-nav__link">
+    Explore the application
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docker-settings-dialog" class="md-nav__link">
+    Docker Settings dialog
+  </a>
+  
+    <nav class="md-nav" aria-label="Docker Settings dialog">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#general" class="md-nav__link">
+    General
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resources" class="md-nav__link">
+    Resources
+  </a>
+  
+    <nav class="md-nav" aria-label="Resources">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#advanced" class="md-nav__link">
+    ADVANCED
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#file-sharing" class="md-nav__link">
+    FILE SHARING
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shared-folders-on-demand" class="md-nav__link">
+    SHARED FOLDERS ON DEMAND
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#proxies" class="md-nav__link">
+    PROXIES
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#network" class="md-nav__link">
+    NETWORK
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wsl-integration" class="md-nav__link">
+    WSL INTEGRATION
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker-engine" class="md-nav__link">
+    Docker Engine
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#command-line" class="md-nav__link">
+    Command Line
+  </a>
+  
+    <nav class="md-nav" aria-label="Command Line">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#experimental-features" class="md-nav__link">
+    EXPERIMENTAL FEATURES
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kubernetes" class="md-nav__link">
+    Kubernetes
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reset" class="md-nav__link">
+    Reset
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#troubleshoot" class="md-nav__link">
+    Troubleshoot
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#switch-between-windows-and-linux-containers" class="md-nav__link">
+    Switch between Windows and Linux containers
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dashboard" class="md-nav__link">
+    Dashboard
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docker-hub" class="md-nav__link">
+    Docker Hub
+  </a>
+  
+    <nav class="md-nav" aria-label="Docker Hub">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#two-factor-authentication" class="md-nav__link">
+    Two-factor authentication
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#adding-tls-certificates" class="md-nav__link">
+    Adding TLS certificates
+  </a>
+  
+    <nav class="md-nav" aria-label="Adding TLS certificates">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-do-i-add-custom-ca-certificates" class="md-nav__link">
+    How do I add custom CA certificates?
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-do-i-add-client-certificates" class="md-nav__link">
+    How do I add client certificates?
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#where-to-go-next" class="md-nav__link">
+    Where to go next
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/yichaoo/index/edit/master/docs/2.Docker/Docker-Start-Windows.md" title="编辑此页" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                  
+                
+                
+                <h1 id="get-started-with-docker-for-windows">Get started with Docker for Windows<a class="headerlink" href="#get-started-with-docker-for-windows" title="Permanent link">&para;</a></h1>
+<p><em>Estimated reading time: 21 minutes</em></p>
+<p>Welcome to Docker Desktop!</p>
+<p>The <em>Docker Desktop for Windows</em> section contains information about the Docker Desktop Community Stable release. For information about features available in Edge releases, see the <a href="https://docs.docker.com/docker-for-windows/edge-release-notes/">Edge release notes</a>. For information about Docker Desktop Enterprise (DDE) releases, see <a href="https://docs.docker.com/desktop/enterprise/">Docker Desktop Enterprise</a>.</p>
+<p>Docker is a full development platform to build, run, and share containerized applications. Docker Desktop is the best way to get started with Docker <em>on Windows</em>.</p>
+<p>See <a href="https://docs.docker.com/docker-for-windows/install/">Install Docker Desktop</a> for download information, system requirements, and installation instructions.</p>
+<h2 id="test-your-installation">Test your installation<a class="headerlink" href="#test-your-installation" title="Permanent link">&para;</a></h2>
+<ol>
+<li>
+<p>Open a terminal window (Command Prompt or PowerShell, <em>but not</em> PowerShell ISE).</p>
+</li>
+<li>
+<p>Run <code>docker --version</code> to ensure that you have a supported version of Docker:</p>
+</li>
+</ol>
+<div class="highlight"><pre><span></span><code>&gt; docker --version
+
+Docker version <span class="m">19</span>.03.1
+</code></pre></div>
+
+<ol>
+<li>Pull the <a href="https://hub.docker.com/r/library/hello-world/">hello-world image</a> from Docker Hub and run a container:</li>
+</ol>
+<div class="highlight"><pre><span></span><code>&gt; docker run hello-world
+
+docker : Unable to find image <span class="s1">&#39;hello-world:latest&#39;</span> locally
+latest: Pulling from library/hello-world
+1b930d010525: Pull <span class="nb">complete</span>
+Digest: sha256:c3b4ada4687bbaa170745b3e4dd8ac3f194ca95b2d0518b417fb47e5879d9b5f
+Status: Downloaded newer image <span class="k">for</span> hello-world:latest
+
+Hello from Docker!
+This message shows that your installation appears to be working correctly.
+...
+</code></pre></div>
+
+<ol>
+<li>List the <code>hello-world</code> <em>image</em> that was downloaded from Docker Hub:</li>
+</ol>
+<div class="highlight"><pre><span></span><code>&gt; docker image ls
+</code></pre></div>
+
+<ol>
+<li>List the <code>hello-world</code> <em>container</em> (that exited after displaying “Hello from Docker!”):</li>
+</ol>
+<div class="highlight"><pre><span></span><code>&gt; docker container ls --all
+</code></pre></div>
+
+<ol>
+<li>Explore the Docker help pages by running some help commands:</li>
+</ol>
+<div class="highlight"><pre><span></span><code>&gt; docker --help
+&gt; docker container --help
+&gt; docker container ls --help
+&gt; docker run --help
+</code></pre></div>
+
+<h2 id="explore-the-application">Explore the application<a class="headerlink" href="#explore-the-application" title="Permanent link">&para;</a></h2>
+<p>In this section, we demonstrate the ease and power of Dockerized applications by running something more complex, such as an OS and a webserver.</p>
+<ol>
+<li>Pull an image of the <a href="https://hub.docker.com/r/_/ubuntu/">Ubuntu OS</a> and run an interactive terminal inside the spawned container:</li>
+</ol>
+<div class="highlight"><pre><span></span><code> &gt; docker run --interactive --tty ubuntu bash
+
+ docker : Unable to find image <span class="s1">&#39;ubuntu:latest&#39;</span> locally
+ latest: Pulling from library/ubuntu
+ 22e816666fd6: Pull <span class="nb">complete</span>
+ 079b6d2a1e53: Pull <span class="nb">complete</span>
+ 11048ebae908: Pull <span class="nb">complete</span>
+ c58094023a2e: Pull <span class="nb">complete</span>
+ Digest: sha256:a7b8b7b33e44b123d7f997bd4d3d0a59fafc63e203d17efedf09ff3f6f516152
+ Status: Downloaded newer image <span class="k">for</span> ubuntu:latest
+</code></pre></div>
+
+<blockquote>
+<p>Do not use PowerShell ISE</p>
+<p>Interactive terminals do not work in PowerShell ISE (but they do in PowerShell). See <a href="https://github.com/docker/for-win/issues/223">docker/for-win/issues/223</a>.</p>
+</blockquote>
+<ol>
+<li>You are in the container. At the root <code>#</code> prompt, check the <code>hostname</code> of the container:</li>
+</ol>
+<div class="highlight"><pre><span></span><code> root@8aea0acb7423:/# hostname
+ 8aea0acb7423
+</code></pre></div>
+
+<p>Notice that the hostname is assigned as the container ID (and is also used in the prompt).</p>
+<ol>
+<li>Exit the shell with the <code>exit</code> command (which also stops the container):</li>
+</ol>
+<div class="highlight"><pre><span></span><code> root@8aea0acb7423:/# <span class="nb">exit</span>
+ &gt;
+</code></pre></div>
+
+<ol>
+<li>List containers with the <code>--all</code> option (because no containers are running).</li>
+</ol>
+<p>The <code>hello-world</code> container (randomly named, <code>relaxed_sammet</code>) stopped after displaying its message. The <code>ubuntu</code> container (randomly named, <code>laughing_kowalevski</code>) stopped when you exited the container.</p>
+<div class="highlight"><pre><span></span><code> &gt; docker container ls --all
+
+ CONTAINER ID    IMAGE          COMMAND     CREATED          STATUS                      PORTS    NAMES
+ 8aea0acb7423    ubuntu         <span class="s2">&quot;bash&quot;</span>      <span class="m">2</span> minutes ago    Exited <span class="o">(</span><span class="m">0</span><span class="o">)</span> <span class="m">2</span> minutes ago             laughing_kowalevski
+ 45f77eb48e78    hello-world    <span class="s2">&quot;/hello&quot;</span>    <span class="m">3</span> minutes ago    Exited <span class="o">(</span><span class="m">0</span><span class="o">)</span> <span class="m">3</span> minutes ago             relaxed_sammet
+</code></pre></div>
+
+<ol>
+<li>Pull and run a Dockerized <a href="https://hub.docker.com/_/nginx/">nginx</a> web server that we name, <code>webserver</code>:</li>
+</ol>
+<div class="highlight"><pre><span></span><code> &gt; docker run --detach --publish <span class="m">80</span>:80 --name webserver nginx
+
+ Unable to find image <span class="s1">&#39;nginx:latest&#39;</span> locally
+ latest: Pulling from library/nginx
+
+ fdd5d7827f33: Pull <span class="nb">complete</span>
+ a3ed95caeb02: Pull <span class="nb">complete</span>
+ 716f7a5f3082: Pull <span class="nb">complete</span>
+ 7b10f03a0309: Pull <span class="nb">complete</span>
+ Digest: sha256:f6a001272d5d324c4c9f3f183e1b69e9e0ff12debeb7a092730d638c33e0de3e
+ Status: Downloaded newer image <span class="k">for</span> nginx:latest
+ dfe13c68b3b86f01951af617df02be4897184cbf7a8b4d5caf1c3c5bd3fc267f
+</code></pre></div>
+
+<ol>
+<li>Point your web browser at <code>http://localhost</code> to display the nginx start page. (You don’t need to append <code>:80</code> because you specified the default HTTP port in the <code>docker</code> command.)</li>
+</ol>
+<p><img alt="Run nginx edge" src="assets/imgs/nginx-homepage.png" /></p>
+<ol>
+<li>List only your <em>running</em> containers:</li>
+</ol>
+<div class="highlight"><pre><span></span><code> &gt; docker container ls
+
+ CONTAINER ID    IMAGE    COMMAND                   CREATED          STATUS          PORTS                 NAMES
+ 0e788d8e4dfd    nginx    &quot;nginx -g &#39;daemon of…&quot;    2 minutes ago    Up 2 minutes    0.0.0.0:80-&gt;80/tcp    webserver
+</code></pre></div>
+
+<ol>
+<li>Stop the running nginx container by the name we assigned it, <code>webserver</code>:</li>
+</ol>
+<div class="highlight"><pre><span></span><code> &gt;  docker container stop webserver
+</code></pre></div>
+
+<ol>
+<li>Remove all three containers by their names -- the latter two names will differ for you:</li>
+</ol>
+<div class="highlight"><pre><span></span><code> &gt; docker container rm webserver laughing_kowalevski relaxed_sammet
+</code></pre></div>
+
+<h2 id="docker-settings-dialog">Docker Settings dialog<a class="headerlink" href="#docker-settings-dialog" title="Permanent link">&para;</a></h2>
+<p>The <strong>Docker Desktop</strong> menu allows you to configure your Docker settings such as installation, updates, version channels, Docker Hub login, and more.</p>
+<p>This section explains the configuration options accessible from the <strong>Settings</strong> dialog.</p>
+<ol>
+<li>Open the Docker Desktop menu by clicking the Docker icon in the Notifications area (or System tray):</li>
+</ol>
+<p><img alt="Showing hidden apps in the taskbar" src="assets/imgs/whale-icon-systray-hidden.png" /></p>
+<ol>
+<li>Select <strong>Settings</strong> to open the Settings dialog:</li>
+</ol>
+<p><img alt="Docker Desktop popup menu" src="assets/imgs/docker-menu-settings.png" /></p>
+<h3 id="general">General<a class="headerlink" href="#general" title="Permanent link">&para;</a></h3>
+<p>On the <strong>General</strong> tab of the Settings dialog, you can configure when to start and update Docker.</p>
+<p><img alt="Settings" src="assets/imgs/settings-general.png" /></p>
+<ul>
+<li>
+<p><strong>Start Docker when you log in</strong> - Automatically start Docker Desktop upon Windows system login.</p>
+</li>
+<li>
+<p><strong>Automatically check for updates</strong> - By default, Docker Desktop automatically checks for updates and notifies you when an update is available. Click <strong>OK</strong> to accept and install updates (or cancel to keep the current version). You can manually update by choosing <strong>Check for Updates</strong> from the main Docker menu.</p>
+</li>
+<li>
+<p><strong>Expose daemon on tcp://localhost:2375 without TLS</strong> - Click this option to enable legacy clients to connect to the Docker daemon. You must use this option with caution as exposing the daemon without TLS can result in remote code execution attacks.</p>
+</li>
+<li>
+<p><strong>Send usage statistics</strong> - By default, Docker Desktop sends diagnostics, crash reports, and usage data. This information helps Docker improve and troubleshoot the application. Clear the check box to opt out. Docker may periodically prompt you for more information.</p>
+</li>
+</ul>
+<p>Click <strong>Switch to the Edge version</strong> to learn more about Docker Desktop Edge releases.</p>
+<h3 id="resources">Resources<a class="headerlink" href="#resources" title="Permanent link">&para;</a></h3>
+<p>The <strong>Resources</strong> tab allows you to configure CPU, memory, disk, proxies, network, and other resources. Different settings are available for configuration depending on whether you are using Linux containers in WSL 2 mode, Linux containers in Hyper-V mode, or Windows containers.</p>
+<p><img alt="Resources" src="assets/imgs/settings-resources.png" /></p>
+<h4 id="advanced">ADVANCED<a class="headerlink" href="#advanced" title="Permanent link">&para;</a></h4>
+<blockquote>
+<p><strong>Note</strong></p>
+<p>The Advanced tab is only available in Hyper-V mode, because in WSL 2 mode and Windows container mode these resources are managed by Windows. In WSL 2 mode, you can configure limits on the memory, CPU, and swap size allocated to the <a href="https://docs.microsoft.com/en-us/windows/wsl/release-notes#build-18945">WSL 2 utility VM</a>.</p>
+</blockquote>
+<p>Use the <strong>Advanced</strong> tab to limit resources available to Docker.</p>
+<p><strong>CPUs</strong>: By default, Docker Desktop is set to use half the number of processors available on the host machine. To increase processing power, set this to a higher number; to decrease, lower the number.</p>
+<p><strong>Memory</strong>: By default, Docker Desktop is set to use <code>2</code> GB runtime memory, allocated from the total available memory on your machine. To increase the RAM, set this to a higher number. To decrease it, lower the number.</p>
+<p><strong>Swap</strong>: Configure swap file size as needed. The default is 1 GB.</p>
+<p><strong>Disk image size</strong>: Specify the size of the disk image.</p>
+<p><strong>Disk image location</strong>: Specify the location of the Linux volume where containers and images are stored.</p>
+<p>You can also move the disk image to a different location. If you attempt to move a disk image to a location that already has one, you get a prompt asking if you want to use the existing image or replace it.</p>
+<h4 id="file-sharing">FILE SHARING<a class="headerlink" href="#file-sharing" title="Permanent link">&para;</a></h4>
+<blockquote>
+<p><strong>Note</strong></p>
+<p>The File sharing tab is only available in Hyper-V mode, because in WSL 2 mode and Windows container mode all files are automatically shared by Windows.</p>
+</blockquote>
+<p>Use File sharing to allow local directories on Windows to be shared with Linux containers. This is especially useful for editing source code in an IDE on the host while running and testing the code in a container. Note that configuring file sharing is not necessary for Windows containers, only <a href="https://docs.docker.com/docker-for-windows/#switch-between-windows-and-linux-containers">Linux containers</a>. If a directory is not shared with a Linux container you may get <code>file not found</code> or <code>cannot start service</code> errors at runtime. See <a href="https://docs.docker.com/docker-for-windows/troubleshoot/#volume-mounting-requires-shared-folders-for-linux-containers">Volume mounting requires shared folders for Linux containers</a>.</p>
+<p>File share settings are:</p>
+<ul>
+<li><strong>Add a Directory</strong>: Click <code>+</code> and navigate to the directory you want to add.</li>
+<li><strong>Apply &amp; Restart</strong> makes the directory available to containers using Docker’s bind mount (<code>-v</code>) feature.</li>
+</ul>
+<blockquote>
+<p>Tips on shared folders, permissions, and volume mounts</p>
+<ul>
+<li>Shared folders are designed to allow application code to be edited on the host while being executed in containers. For non-code items such as cache directories or databases, the performance will be much better if they are stored in the Linux VM, using a <a href="https://docs.docker.com/storage/volumes/">data volume</a> (named volume) or <a href="https://docs.docker.com/storage/volumes/">data container</a>.</li>
+<li>Docker Desktop sets permissions to read/write/execute for users, groups and others <a href="http://permissions-calculator.org/decode/0777/">0777 or a+rwx</a>. This is not configurable. See <a href="https://docs.docker.com/docker-for-windows/troubleshoot/#permissions-errors-on-data-directories-for-shared-volumes">Permissions errors on data directories for shared volumes</a>.</li>
+<li>Windows presents a case-insensitive view of the filesystem to applications while Linux is case-sensitive. On Linux it is possible to create 2 separate files: <code>test</code> and <code>Test</code>, while on Windows these filenames would actually refer to the same underlying file. This can lead to problems where an app works correctly on a developer Windows machine (where the file contents are shared) but fails when run in Linux in production (where the file contents are distinct). To avoid this, Docker Desktop insists that all shared files are accessed as their original case. Therefore if a file is created called <code>test</code>, it must be opened as <code>test</code>. Attempts to open <code>Test</code> will fail with “No such file or directory”. Similarly once a file called <code>test</code> is created, attempts to create a second file called <code>Test</code> will fail.</li>
+</ul>
+</blockquote>
+<h4 id="shared-folders-on-demand">SHARED FOLDERS ON DEMAND<a class="headerlink" href="#shared-folders-on-demand" title="Permanent link">&para;</a></h4>
+<p>You can share a folder “on demand” the first time a particular folder is used by a container.</p>
+<p>If you run a Docker command from a shell with a volume mount (as shown in the example below) or kick off a Compose file that includes volume mounts, you get a popup asking if you want to share the specified folder.</p>
+<p>You can select to <strong>Share it</strong>, in which case it is added your Docker Desktop Shared Folders list and available to containers. Alternatively, you can opt not to share it by selecting <strong>Cancel</strong>.</p>
+<p><img alt="Shared folder on demand" src="assets/imgs/shared-folder-on-demand.png" /></p>
+<h4 id="proxies">PROXIES<a class="headerlink" href="#proxies" title="Permanent link">&para;</a></h4>
+<p>Docker Desktop lets you configure HTTP/HTTPS Proxy Settings and automatically propagates these to Docker. For example, if you set your proxy settings to <code>http://proxy.example.com</code>, Docker uses this proxy when pulling containers.</p>
+<p>Your proxy settings, however, will not be propagated into the containers you start. If you wish to set the proxy settings for your containers, you need to define environment variables for them, just like you would do on Linux, for example:</p>
+<div class="highlight"><pre><span></span><code>&gt; docker run -e HTTP_PROXY=http://proxy.example.com:3128 alpine env
+
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+HOSTNAME=b7edf988b2b5
+TERM=xterm
+HOME=/root
+HTTP_PROXY=http://proxy.example.com:3128
+</code></pre></div>
+
+<p>For more information on setting environment variables for running containers, see <a href="https://docs.docker.com/engine/reference/commandline/run/#set-environment-variables--e---env---env-file">Set environment variables</a>.</p>
+<h4 id="network">NETWORK<a class="headerlink" href="#network" title="Permanent link">&para;</a></h4>
+<blockquote>
+<p><strong>Note</strong></p>
+<p>The Network tab is not available in Windows container mode because networking is managed by Windows.</p>
+</blockquote>
+<p>You can configure Docker Desktop networking to work on a virtual private network (VPN). Specify a network address translation (NAT) prefix and subnet mask to enable Internet connectivity.</p>
+<p><strong>DNS Server</strong>: You can configure the DNS server to use dynamic or static IP addressing.</p>
+<blockquote>
+<p><strong>Note</strong>: Some users reported problems connecting to Docker Hub on Docker Desktop Stable version. This would manifest as an error when trying to run <code>docker</code> commands that pull images from Docker Hub that are not already downloaded, such as a first time run of <code>docker run hello-world</code>. If you encounter this, reset the DNS server to use the Google DNS fixed address: <code>8.8.8.8</code>. For more information, see <a href="https://docs.docker.com/docker-for-windows/troubleshoot/#networking-issues">Networking issues</a> in Troubleshooting.</p>
+</blockquote>
+<p>Updating these settings requires a reconfiguration and reboot of the Linux VM.</p>
+<h4 id="wsl-integration">WSL INTEGRATION<a class="headerlink" href="#wsl-integration" title="Permanent link">&para;</a></h4>
+<p>In WSL 2 mode, you can configure which WSL 2 distributions will have the Docker WSL integration.</p>
+<p>By default, the integration will be enabled on your default WSL distribution. To change your default WSL distro, run <code>wsl --set-default &lt;distro name&gt;</code>. (For example, to set Ubuntu as your default WSL distro, run <code>wsl --set-default ubuntu</code>).</p>
+<p>You can also select any additional distributions you would like to enable the WSL 2 integration on.</p>
+<p>For more details on configuring Docker Desktop to use WSL 2, see <a href="https://docs.docker.com/docker-for-windows/wsl/">Docker Desktop WSL 2 backend</a>.</p>
+<h3 id="docker-engine">Docker Engine<a class="headerlink" href="#docker-engine" title="Permanent link">&para;</a></h3>
+<p>The Docker Engine page allows you to configure the Docker daemon to determine how your containers run.</p>
+<p>Type a JSON configuration file in the box to configure the daemon settings. For a full list of options, see the Docker Engine <a href="https://docs.docker.com/engine/reference/commandline/dockerd/">dockerd commandline reference</a>.</p>
+<p>Click <strong>Apply &amp; Restart</strong> to save your settings and restart Docker Desktop.</p>
+<h3 id="command-line">Command Line<a class="headerlink" href="#command-line" title="Permanent link">&para;</a></h3>
+<p>On the Command Line page, you can specify whether or not to enable experimental features.</p>
+<p>On both Docker Desktop Edge and Stable releases, you can toggle the experimental features on and off. If you toggle the experimental features off, Docker Desktop uses the current generally available release of Docker Engine.</p>
+<h4 id="experimental-features">EXPERIMENTAL FEATURES<a class="headerlink" href="#experimental-features" title="Permanent link">&para;</a></h4>
+<p>Docker Desktop Edge releases have the experimental version of Docker Engine enabled by default, described in the <a href="https://github.com/docker/cli/blob/master/experimental/README.md">Docker Experimental Features README</a> on GitHub.</p>
+<p>Experimental features provide early access to future product functionality. These features are intended for testing and feedback only as they may change between releases without warning or can be removed entirely from a future release. Experimental features must not be used in production environments. Docker does not offer support for experimental features.</p>
+<blockquote>
+<p>To enable experimental features in the Docker CLI, edit the <code>config.json</code> file and set <code>experimental</code> to enabled.</p>
+<p>To enable experimental features from the Docker Desktop menu, click <strong>Settings</strong> (<strong>Preferences</strong> on macOS) &gt; <strong>Command Line</strong> and then turn on the <strong>Enable experimental features</strong> toggle. Click <strong>Apply &amp; Restart</strong>.</p>
+</blockquote>
+<p>For a list of current experimental features in the Docker CLI, see <a href="https://github.com/docker/cli/blob/master/experimental/README.md">Docker CLI Experimental features</a>.</p>
+<p>Run <code>docker version</code> to verify whether you have enabled experimental features. Experimental mode is listed under <code>Server</code> data. If <code>Experimental</code> is <code>true</code>, then Docker is running in experimental mode, as shown here:</p>
+<div class="highlight"><pre><span></span><code>&gt; docker version
+
+Client: Docker Engine - Community
+ Version:           19.03.1
+ API version:       1.40
+ Go version:        go1.12.5
+ Git commit:        74b1e89
+ Built:             Thu Jul 25 21:17:08 2019
+ OS/Arch:           windows/amd64
+ Experimental:      true
+
+Server: Docker Engine - Community
+ Engine:
+  Version:          19.03.1
+  API version:      1.40 (minimum version 1.12)
+  Go version:       go1.12.5
+  Git commit:       74b1e89
+  Built:            Thu Jul 25 21:17:52 2019
+  OS/Arch:          linux/amd64
+  Experimental:     true
+ containerd:
+  Version:          v1.2.6
+  GitCommit:        894b81a4b802e4eb2a91d1ce216b8817763c29fb
+ runc:
+  Version:          1.0.0-rc8
+  GitCommit:        425e105d5a03fabd737a126ad93d62a9eeede87f
+ docker-init:
+  Version:          0.18.0
+  GitCommit:        fec3683
+</code></pre></div>
+
+<h3 id="kubernetes">Kubernetes<a class="headerlink" href="#kubernetes" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p><strong>Note</strong></p>
+<p>The Kubernetes tab is not available in Windows container mode.</p>
+</blockquote>
+<p>Docker Desktop includes a standalone Kubernetes server that runs on your Windows host, so that you can test deploying your Docker workloads on Kubernetes.</p>
+<p><img alt="Enable Kubernetes" src="assets/imgs/settings-kubernetes.png" /></p>
+<p>The Kubernetes client command, <code>kubectl</code>, is included and configured to connect to the local Kubernetes server. If you have <code>kubectl</code> already installed and pointing to some other environment, such as <code>minikube</code> or a GKE cluster, be sure to change context so that <code>kubectl</code> is pointing to <code>docker-desktop</code>:</p>
+<div class="highlight"><pre><span></span><code>&gt; kubectl config get-contexts
+&gt; kubectl config use-context docker-desktop
+</code></pre></div>
+
+<p>To enable Kubernetes support and install a standalone instance of Kubernetes running as a Docker container, select <strong>Enable Kubernetes</strong>.</p>
+<p>To set Kubernetes as the <a href="https://docs.docker.com/docker-for-mac/kubernetes/#override-the-default-orchestrator">default orchestrator</a>, select <strong>Deploy Docker Stacks to Kubernetes by default</strong>.</p>
+<p>By default, Kubernetes containers are hidden from commands like <code>docker service ls</code>, because managing them manually is not supported. To make them visible, select <strong>Show system containers (advanced)</strong>. Most users do not need this option.</p>
+<p>Click <strong>Apply &amp; Restart</strong> to save the settings. This instantiates images required to run the Kubernetes server as containers, and installs the <code>kubectl.exe</code> command in the path.</p>
+<ul>
+<li>
+<p>When Kubernetes is enabled and running, an additional status bar item displays at the bottom right of the Docker Desktop Settings dialog. The status of Kubernetes shows in the Docker menu and the context points to <code>docker-desktop</code>.</p>
+</li>
+<li>
+<p>To disable Kubernetes support at any time, clear the <strong>Enable Kubernetes</strong> check box. The Kubernetes containers are stopped and removed, and the <code>/usr/local/bin/kubectl</code> command is removed.</p>
+</li>
+<li>
+<p>To delete all stacks and Kubernetes resources, select <strong>Reset Kubernetes Cluster</strong>.</p>
+</li>
+<li>
+<p>If you installed <code>kubectl</code> by another method, and experience conflicts, remove it.</p>
+</li>
+</ul>
+<p>For more information on using the Kubernetes integration with Docker Desktop, see <a href="https://docs.docker.com/docker-for-windows/kubernetes/">Deploy on Kubernetes</a>.</p>
+<h3 id="reset">Reset<a class="headerlink" href="#reset" title="Permanent link">&para;</a></h3>
+<p>The <strong>Restart Docker Desktop</strong> and <strong>Reset to factory defaults</strong> options are now available on the <strong>Troubleshoot</strong> menu. For information, see <a href="https://docs.docker.com/docker-for-windows/troubleshoot/">Logs and Troubleshooting</a>.</p>
+<h3 id="troubleshoot">Troubleshoot<a class="headerlink" href="#troubleshoot" title="Permanent link">&para;</a></h3>
+<p>Visit our <a href="https://docs.docker.com/docker-for-windows/troubleshoot/">Logs and Troubleshooting</a> guide for more details.</p>
+<p>Log on to our <a href="https://forums.docker.com/c/docker-for-windows">Docker Desktop for Windows forum</a> to get help from the community, review current user topics, or join a discussion.</p>
+<p>Log on to <a href="https://github.com/docker/for-win/issues">Docker Desktop for Windows issues on GitHub</a> to report bugs or problems and review community reported issues.</p>
+<p>For information about providing feedback on the documentation or update it yourself, see <a href="https://docs.docker.com/opensource/">Contribute to documentation</a>.</p>
+<h2 id="switch-between-windows-and-linux-containers">Switch between Windows and Linux containers<a class="headerlink" href="#switch-between-windows-and-linux-containers" title="Permanent link">&para;</a></h2>
+<p>From the Docker Desktop menu, you can toggle which daemon (Linux or Windows) the Docker CLI talks to. Select <strong>Switch to Windows containers</strong> to use Windows containers, or select <strong>Switch to Linux containers</strong> to use Linux containers (the default).</p>
+<p>For more information on Windows containers, refer to the following documentation:</p>
+<ul>
+<li>Microsoft documentation on <a href="https://docs.microsoft.com/en-us/virtualization/windowscontainers/about/index">Windows containers</a>.</li>
+<li><a href="https://blog.docker.com/2016/09/build-your-first-docker-windows-server-container/">Build and Run Your First Windows Server Container (Blog Post)</a> gives a quick tour of how to build and run native Docker Windows containers on Windows 10 and Windows Server 2016 evaluation releases.</li>
+<li><a href="https://github.com/docker/labs/blob/master/windows/windows-containers/README.md">Getting Started with Windows Containers (Lab)</a> shows you how to use the <a href="https://github.com/aspnet/MusicStore/blob/dev/README.md">MusicStore</a> application with Windows containers. The MusicStore is a standard .NET application and, <a href="https://github.com/friism/MusicStore">forked here to use containers</a>, is a good example of a multi-container application.</li>
+<li>To understand how to connect to Windows containers from the local host, see <a href="https://docs.docker.com/docker-for-windows/troubleshoot/#limitations-of-windows-containers-for-localhost-and-published-ports">Limitations of Windows containers for <code>localhost</code> and published ports</a></li>
+</ul>
+<blockquote>
+<p>Settings dialog changes with Windows containers</p>
+<p>When you switch to Windows containers, the Settings dialog only shows those tabs that are active and apply to your Windows containers:</p>
+</blockquote>
+<ul>
+<li><a href="https://docs.docker.com/docker-for-windows/#general">General</a></li>
+<li><a href="https://docs.docker.com/docker-for-windows/#proxies">Proxies</a></li>
+<li><a href="https://docs.docker.com/docker-for-windows/#docker-daemon">Daemon</a></li>
+<li><a href="https://docs.docker.com/docker-for-windows/#reset">Reset</a></li>
+</ul>
+<p>If you set proxies or daemon configuration in Windows containers mode, these apply only on Windows containers. If you switch back to Linux containers, proxies and daemon configurations return to what you had set for Linux containers. Your Windows container settings are retained and become available again when you switch back.</p>
+<h2 id="dashboard">Dashboard<a class="headerlink" href="#dashboard" title="Permanent link">&para;</a></h2>
+<p>The Docker Desktop Dashboard enables you to interact with containers and applications and manage the lifecycle of your applications directly from your machine. The Dashboard UI shows all running, stopped, and started containers with their state. It provides an intuitive interface to perform common actions to inspect and manage containers and Docker Compose applications. For more information, see <a href="https://docs.docker.com/desktop/dashboard/">Docker Desktop Dashboard</a>.</p>
+<h2 id="docker-hub">Docker Hub<a class="headerlink" href="#docker-hub" title="Permanent link">&para;</a></h2>
+<p>Select <strong>Sign in /Create Docker ID</strong> from the Docker Desktop menu to access your <a href="https://hub.docker.com/">Docker Hub</a> account. Once logged in, you can access your Docker Hub repositories directly from the Docker Desktop menu.</p>
+<p>For more information, refer to the following <a href="https://docs.docker.com/docker-hub/">Docker Hub topics</a>:</p>
+<ul>
+<li><a href="https://docs.docker.com/docker-hub/orgs/">Organizations and Teams in Docker Hub</a></li>
+<li><a href="https://docs.docker.com/docker-hub/builds/">Builds and Images</a></li>
+</ul>
+<h3 id="two-factor-authentication">Two-factor authentication<a class="headerlink" href="#two-factor-authentication" title="Permanent link">&para;</a></h3>
+<p>Docker Desktop enables you to sign into Docker Hub using two-factor authentication. Two-factor authentication provides an extra layer of security when accessing your Docker Hub account.</p>
+<p>You must enable two-factor authentication in Docker Hub before signing into your Docker Hub account through Docker Desktop. For instructions, see <a href="https://docs.docker.com/docker-hub/2fa/">Enable two-factor authentication for Docker Hub</a>.</p>
+<p>After you have enabled two-factor authentication:</p>
+<ol>
+<li>Go to the Docker Desktop menu and then select <strong>Sign in / Create Docker ID</strong>.</li>
+<li>Enter your Docker ID and password and click <strong>Sign in</strong>.</li>
+<li>After you have successfully signed in, Docker Desktop prompts you to enter the authentication code. Enter the six-digit code from your phone and then click <strong>Verify</strong>.</li>
+</ol>
+<p><img alt="Docker Desktop 2FA" src="assets/imgs/desktop-win-2fa.png" /></p>
+<p>After you have successfully authenticated, you can access your organizations and repositories directly from the Docker Desktop menu.</p>
+<h2 id="adding-tls-certificates">Adding TLS certificates<a class="headerlink" href="#adding-tls-certificates" title="Permanent link">&para;</a></h2>
+<p>You can add trusted <strong>Certificate Authorities (CAs)</strong> to your Docker daemon to verify registry server certificates, and <strong>client certificates</strong>, to authenticate to registries. For more information, see <a href="https://docs.docker.com/docker-for-windows/faqs/#how-do-i-add-custom-ca-certificates">How do I add custom CA certificates?</a> and <a href="https://docs.docker.com/docker-for-windows/faqs/#how-do-i-add-client-certificates">How do I add client certificates?</a> in the FAQs.</p>
+<h3 id="how-do-i-add-custom-ca-certificates">How do I add custom CA certificates?<a class="headerlink" href="#how-do-i-add-custom-ca-certificates" title="Permanent link">&para;</a></h3>
+<p>Docker Desktop supports all trusted Certificate Authorities (CAs) (root or intermediate). Docker recognizes certs stored under Trust Root Certification Authorities or Intermediate Certification Authorities.</p>
+<p>Docker Desktop creates a certificate bundle of all user-trusted CAs based on the Windows certificate store, and appends it to Moby trusted certificates. Therefore, if an enterprise SSL certificate is trusted by the user on the host, it is trusted by Docker Desktop.</p>
+<p>To learn more about how to install a CA root certificate for the registry, see <a href="https://docs.docker.com/engine/security/certificates/">Verify repository client with certificates</a> in the Docker Engine topics.</p>
+<h3 id="how-do-i-add-client-certificates">How do I add client certificates?<a class="headerlink" href="#how-do-i-add-client-certificates" title="Permanent link">&para;</a></h3>
+<p>You can add your client certificates in <code>~/.docker/certs.d/&lt;MyRegistry&gt;:&lt;Port&gt;/client.cert</code> and <code>~/.docker/certs.d/&lt;MyRegistry&gt;:&lt;Port&gt;/client.key</code>. You do not need to push your certificates with <code>git</code> commands.</p>
+<p>When the Docker Desktop application starts, it copies the <code>~/.docker/certs.d</code> folder on your Windows system to the <code>/etc/docker/certs.d</code> directory on Moby (the Docker Desktop virtual machine running on Hyper-V).</p>
+<p>You need to restart Docker Desktop after making any changes to the keychain or to the <code>~/.docker/certs.d</code> directory in order for the changes to take effect.</p>
+<p>The registry cannot be listed as an <em>insecure registry</em> (see <a href="https://docs.docker.com/docker-for-windows/#docker-engine">Docker Daemon</a>). Docker Desktop ignores certificates listed under insecure registries, and does not send client certificates. Commands like <code>docker run</code> that attempt to pull from the registry produce error messages on the command line, as well as on the registry.</p>
+<p>To learn more about how to set the client TLS certificate for verification, see <a href="https://docs.docker.com/engine/security/certificates/">Verify repository client with certificates</a> in the Docker Engine topics.</p>
+<h2 id="where-to-go-next">Where to go next<a class="headerlink" href="#where-to-go-next" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Try out the walkthrough at <a href="https://docs.docker.com/get-started/">Get Started</a>.</li>
+<li>Dig in deeper with <a href="https://github.com/docker/labs/">Docker Labs</a> example walkthroughs and source code.</li>
+<li>Refer to the <a href="https://docs.docker.com/engine/reference/commandline/cli/">Docker CLI Reference Guide</a>.</li>
+</ul>
+<p><a href="https://docs.docker.com/search/?q=windows">windows</a>, <a href="https://docs.docker.com/search/?q=edge">edge</a>, <a href="https://docs.docker.com/search/?q=tutorial">tutorial</a>, <a href="https://docs.docker.com/search/?q=run">run</a>, <a href="https://docs.docker.com/search/?q=docker">docker</a>, <a href="https://docs.docker.com/search/?q=local">local</a>, <a href="https://docs.docker.com/search/?q=machine">machine</a></p>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href="Docker%20Tutorials%20and%20Labs.html" title="Docker Tutorials and Labs" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  上一页
+                </span>
+                Docker Tutorials and Labs
+              </div>
+            </div>
+          </a>
+        
+        
+          <a href="Play%20with%20Docker%20Classroom.html" title="Play with Docker Classroom" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  下一页
+                </span>
+                Play with Docker Classroom
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2016 - 2020 LYC
+          </div>
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+  <div class="md-footer-social">
+    
+      
+      
+        
+        
+      
+      <a href="https://github.com/yichaoo" target="_blank" rel="noopener" title="github.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+      </a>
+    
+      
+      
+        
+        
+      
+      <a href="https://github.com/yichaoo" target="_blank" rel="noopener" title="github.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M433.754 420.445c-11.526 1.393-44.86-52.741-44.86-52.741 0 31.345-16.136 72.247-51.051 101.786 16.842 5.192 54.843 19.167 45.803 34.421-7.316 12.343-125.51 7.881-159.632 4.037-34.122 3.844-152.316 8.306-159.632-4.037-9.045-15.25 28.918-29.214 45.783-34.415-34.92-29.539-51.059-70.445-51.059-101.792 0 0-33.334 54.134-44.859 52.741-5.37-.65-12.424-29.644 9.347-99.704 10.261-33.024 21.995-60.478 40.144-105.779C60.683 98.063 108.982.006 224 0c113.737.006 163.156 96.133 160.264 214.963 18.118 45.223 29.912 72.85 40.144 105.778 21.768 70.06 14.716 99.053 9.346 99.704z"/></svg>
+      </a>
+    
+      
+      
+        
+        
+      
+      <a href="https://github.com/yichaoo" target="_blank" rel="noopener" title="github.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M385.2 167.6c6.4 0 12.6.3 18.8 1.1C387.4 90.3 303.3 32 207.7 32 100.5 32 13 104.8 13 197.4c0 53.4 29.3 97.5 77.9 131.6l-19.3 58.6 68-34.1c24.4 4.8 43.8 9.7 68.2 9.7 6.2 0 12.1-.3 18.3-.8-4-12.9-6.2-26.6-6.2-40.8-.1-84.9 72.9-154 165.3-154zm-104.5-52.9c14.5 0 24.2 9.7 24.2 24.4 0 14.5-9.7 24.2-24.2 24.2-14.8 0-29.3-9.7-29.3-24.2.1-14.7 14.6-24.4 29.3-24.4zm-136.4 48.6c-14.5 0-29.3-9.7-29.3-24.2 0-14.8 14.8-24.4 29.3-24.4 14.8 0 24.4 9.7 24.4 24.4 0 14.6-9.6 24.2-24.4 24.2zM563 319.4c0-77.9-77.9-141.3-165.4-141.3-92.7 0-165.4 63.4-165.4 141.3S305 460.7 397.6 460.7c19.3 0 38.9-5.1 58.6-9.9l53.4 29.3-14.8-48.6C534 402.1 563 363.2 563 319.4zm-219.1-24.5c-9.7 0-19.3-9.7-19.3-19.6 0-9.7 9.7-19.3 19.3-19.3 14.8 0 24.4 9.7 24.4 19.3 0 10-9.7 19.6-24.4 19.6zm107.1 0c-9.7 0-19.3-9.7-19.3-19.6 0-9.7 9.7-19.3 19.3-19.3 14.5 0 24.4 9.7 24.4 19.3.1 10-9.9 19.6-24.4 19.6z"/></svg>
+      </a>
+    
+  </div>
+
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../assets/javascripts/vendor.d710d30a.min.js"></script>
+      <script src="../assets/javascripts/bundle.b39636ac.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "\u590d\u5236", "clipboard.copied": "\u5df2\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\uff0c\\u3002]+", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c"}</script>
+      
+      <script>
+        app = initialize({
+          base: "..",
+          features: ["navigation.tabs"],
+          search: Object.assign({
+            worker: "../assets/javascripts/worker/search.a68abb33.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+    
+  </body>
+</html>

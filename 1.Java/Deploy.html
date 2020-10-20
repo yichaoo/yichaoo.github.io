@@ -1,0 +1,1463 @@
+
+
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="DevOps从入门到躺坑">
+      
+      
+        <link rel="canonical" href="https://yichaoo.github.io/1.Java/Deploy.html">
+      
+      
+        <meta name="author" content="Liu Yichao">
+      
+      <link rel="shortcut icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.4.0">
+    
+    
+      
+        <title>Spring Boot打包部署篇 - DevOps从入门到躺坑</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.fe0cca5b.min.css">
+      
+        <link rel="stylesheet" href="../assets/stylesheets/palette.a46bcfb3.min.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#7e57c2">
+      
+    
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="deep-purple" data-md-color-accent="deep-purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#spring-boot" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href="https://yichaoo.github.io/" title="DevOps从入门到躺坑" class="md-header-nav__button md-logo" aria-label="DevOps从入门到躺坑">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            DevOps从入门到躺坑
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              Spring Boot打包部署篇
+            
+          </span>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active">
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header-nav__source">
+        
+<a href="https://github.com/yichaoo/index/" title="前往 GitHub 仓库" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    yichaoo/index
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+        
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="https://yichaoo.github.io/" title="DevOps从入门到躺坑" class="md-nav__button md-logo" aria-label="DevOps从入门到躺坑">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    DevOps从入门到躺坑
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/yichaoo/index/" title="前往 GitHub 仓库" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    yichaoo/index
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-1" type="checkbox" id="nav-1" checked>
+    
+    <label class="md-nav__link" for="nav-1">
+      1.Java
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="1.Java" data-md-level="1">
+      <label class="md-nav__title" for="nav-1">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        1.Java
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="01MAVEN%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85%E5%8F%8A%E9%A1%B9%E7%9B%AE%E9%85%8D%E7%BD%AE.html" title="MAVEN环境安装及IDEA项目配置" class="md-nav__link">
+      MAVEN环境安装及IDEA项目配置
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="02JavaWeb%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%E5%88%B0tomcat.html" title="JavaWeb项目部署到tomcat" class="md-nav__link">
+      JavaWeb项目部署到tomcat
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Spring Boot打包部署篇
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 9h14V7H3v2m0 4h14v-2H3v2m0 4h14v-2H3v2m16 0h2v-2h-2v2m0-10v2h2V7h-2m0 6h2v-2h-2v2z"/></svg>
+        </span>
+      </label>
+    
+    <a href="Deploy.html" title="Spring Boot打包部署篇" class="md-nav__link md-nav__link--active">
+      Spring Boot打包部署篇
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#jar" class="md-nav__link">
+    Jar包、配置文件、依赖包分开打包
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    更改权限
+  </a>
+  
+    <nav class="md-nav" aria-label="更改权限">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    语法模板
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    注：
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#profile-" class="md-nav__link">
+    Profile-多环境配置
+  </a>
+  
+    <nav class="md-nav" aria-label="Profile-多环境配置">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    查看应用是否启动
+  </a>
+  
+    <nav class="md-nav" aria-label="查看应用是否启动">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    一键启动脚本
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Maven.html" title="Welcome to Apache Maven" class="md-nav__link">
+      Welcome to Apache Maven
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      1.Linux
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="1.Linux" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        1.Linux
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../1.Linux/1.linux-demo.html" title="Linux 基本命令手册" class="md-nav__link">
+      Linux 基本命令手册
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      2.Docker
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="2.Docker" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        2.Docker
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2.Docker/01DockerHome.html" title="01.开始Docker" class="md-nav__link">
+      01.开始Docker
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2.Docker/02Docker%20Desktop-Windows.html" title="02.Docker Desktop-Window" class="md-nav__link">
+      02.Docker Desktop-Window
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2.Docker/Docker%20Tutorials%20and%20Labs.html" title="Docker Tutorials and Labs" class="md-nav__link">
+      Docker Tutorials and Labs
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2.Docker/Docker-Start-Windows.html" title="Get started with Docker for Windows" class="md-nav__link">
+      Get started with Docker for Windows
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2.Docker/Play%20with%20Docker%20Classroom.html" title="Play with Docker Classroom" class="md-nav__link">
+      Play with Docker Classroom
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3-6" type="checkbox" id="nav-3-6">
+    
+    <label class="md-nav__link" for="nav-3-6">
+      Docker For Developers
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Docker For Developers" data-md-level="2">
+      <label class="md-nav__title" for="nav-3-6">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        Docker For Developers
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2.Docker/Docker-For-Developers/01Docker%20for%20Beginners%20-%20Linux.html" title="Docker for Beginners - Linux" class="md-nav__link">
+      Docker for Beginners - Linux
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2.Docker/Docker-For-Developers/02Application%20Containerization%20and%20Microservice%20Orchestration.html" title="Application Containerization and Microservice Orchestration" class="md-nav__link">
+      Application Containerization and Microservice Orchestration
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3-7" type="checkbox" id="nav-3-7">
+    
+    <label class="md-nav__link" for="nav-3-7">
+      笔记
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="笔记" data-md-level="2">
+      <label class="md-nav__title" for="nav-3-7">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        笔记
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2.Docker/%E7%AC%94%E8%AE%B0/%E6%9C%9D%E5%A4%95%E7%AC%94%E8%AE%B0.html" title="朝夕笔记" class="md-nav__link">
+      朝夕笔记
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3-8" type="checkbox" id="nav-3-8">
+    
+    <label class="md-nav__link" for="nav-3-8">
+      踩坑记录
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="踩坑记录" data-md-level="2">
+      <label class="md-nav__title" for="nav-3-8">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        踩坑记录
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2.Docker/%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95/CentOS7%20%E5%AE%B9%E5%99%A8%E7%8E%AF%E5%A2%83%E5%88%A0%E9%99%A4%E9%BB%98%E8%AE%A4%E7%BD%91%E6%A1%A5Docker0%EF%BC%8C%E9%87%87%E7%94%A8%E8%87%AA%E5%AE%9A%E4%B9%89%E7%BD%91%E6%A1%A5%E8%BF%9B%E8%A1%8C%E9%80%9A%E8%AE%AF.html" title="CentOS7 容器环境删除默认网桥Docker0，采用自定义网桥进行通讯" class="md-nav__link">
+      CentOS7 容器环境删除默认网桥Docker0，采用自定义网桥进行通讯
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      2.SpringBoot
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="2.SpringBoot" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        2.SpringBoot
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2.SpringBoot/index.html" title="Spring目录" class="md-nav__link">
+      Spring目录
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2.SpringBoot/Accessing%20Data%20with%20JPA.html" title="Accessing Data with JPA" class="md-nav__link">
+      Accessing Data with JPA
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2.SpringBoot/QuickStart.html" title="Spring Quickstart Guide" class="md-nav__link">
+      Spring Quickstart Guide
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+    
+    <label class="md-nav__link" for="nav-5">
+      3.K8S
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="3.K8S" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        3.K8S
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../3.K8S/home.html" title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
+    
+    <label class="md-nav__link" for="nav-6">
+      4.CI&CD
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="4.CI&CD" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        4.CI&CD
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../4.CI%26CD/Jenkins.html" title="Jenkins" class="md-nav__link">
+      Jenkins
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
+    
+    <label class="md-nav__link" for="nav-7">
+      文档附录
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="文档附录" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        文档附录
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../%E6%96%87%E6%A1%A3%E9%99%84%E5%BD%95/index.html" title="Markdown介绍" class="md-nav__link">
+      Markdown介绍
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../%E6%96%87%E6%A1%A3%E9%99%84%E5%BD%95/00Markdown%E6%95%99%E7%A8%8B.html" title="Markdown教程" class="md-nav__link">
+      Markdown教程
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../%E6%96%87%E6%A1%A3%E9%99%84%E5%BD%95/01Mkdocs%E4%BB%8B%E7%BB%8D.html" title="MkDocs介绍" class="md-nav__link">
+      MkDocs介绍
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../%E6%96%87%E6%A1%A3%E9%99%84%E5%BD%95/02MkDocs%E5%AE%98%E7%BD%91.html" title="MkDocs官网" class="md-nav__link">
+      MkDocs官网
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../%E6%96%87%E6%A1%A3%E9%99%84%E5%BD%95/03MkDocConfigration.html" title="MkDoc Configuration" class="md-nav__link">
+      MkDoc Configuration
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../%E6%96%87%E6%A1%A3%E9%99%84%E5%BD%95/04Material%20for%20MkDocs%20Getting%20started.html" title="Material for MkDocs Getting started" class="md-nav__link">
+      Material for MkDocs Getting started
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../%E6%96%87%E6%A1%A3%E9%99%84%E5%BD%95/05%E6%90%AD%E5%BB%BAGitPages.html" title="基于mkdocs-material搭建个人静态博客(含支持的markdown语法)" class="md-nav__link">
+      基于mkdocs-material搭建个人静态博客(含支持的markdown语法)
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../%E6%96%87%E6%A1%A3%E9%99%84%E5%BD%95/06CMD%20Markdown.html" title="欢迎使用 Cmd Markdown 编辑阅读器" class="md-nav__link">
+      欢迎使用 Cmd Markdown 编辑阅读器
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../%E6%96%87%E6%A1%A3%E9%99%84%E5%BD%95/%E9%99%84%E5%BD%95%EF%BC%9A%E5%88%9B%E5%A7%8B%E4%BA%BA%20John%20Gruber%20%E7%9A%84%20Markdown%20%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95%E8%AF%B4%E6%98%8E.html" title="附录：创始人 John Gruber 的 Markdown 基础语法说明" class="md-nav__link">
+      附录：创始人 John Gruber 的 Markdown 基础语法说明
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#jar" class="md-nav__link">
+    Jar包、配置文件、依赖包分开打包
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    更改权限
+  </a>
+  
+    <nav class="md-nav" aria-label="更改权限">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    语法模板
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    注：
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#profile-" class="md-nav__link">
+    Profile-多环境配置
+  </a>
+  
+    <nav class="md-nav" aria-label="Profile-多环境配置">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    查看应用是否启动
+  </a>
+  
+    <nav class="md-nav" aria-label="查看应用是否启动">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    一键启动脚本
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/yichaoo/index/edit/master/docs/1.Java/Deploy.md" title="编辑此页" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                  
+                
+                
+                <h1 id="spring-boot">Spring Boot打包部署篇<a class="headerlink" href="#spring-boot" title="Permanent link">&para;</a></h1>
+<h3 id="jar">Jar包、配置文件、依赖包分开打包<a class="headerlink" href="#jar" title="Permanent link">&para;</a></h3>
+<p>由于每次以jar包方式部署会有上面说的缺点，为了解决这些问题，可以将jar包、配置文件、依赖包分开打包。分开打包后，有如下好处：</p>
+<p>1、可以实现当依赖包有变化时，才重新打包依赖包</p>
+<p>2、配置文件也可以修改</p>
+<p>3、由于依赖包和jar包分离，可以减少jar文件大小。jar文件减少，可以缩短上传到服务器的时间</p>
+<p>第一步：pom文件修改如下：</p>
+<div class="highlight"><pre><span></span><code><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="nt">&lt;project</span> <span class="na">xmlns=</span><span class="s">&quot;http://maven.apache.org/POM/4.0.0&quot;</span>
+         <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+         <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;modelVersion&gt;</span>4.0.0<span class="nt">&lt;/modelVersion&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>com.jltechcn<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>jhdxccip<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;packaging&gt;</span>pom<span class="nt">&lt;/packaging&gt;</span>
+    <span class="nt">&lt;version&gt;</span>1.0-SNAPSHOT<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;properties&gt;</span>
+        <span class="nt">&lt;project.build.sourceEncoding&gt;</span>UTF-8<span class="nt">&lt;/project.build.sourceEncoding&gt;</span>
+        <span class="nt">&lt;jdk.version&gt;</span>1.8<span class="nt">&lt;/jdk.version&gt;</span>
+        <span class="nt">&lt;maven.test.skip&gt;</span>true<span class="nt">&lt;/maven.test.skip&gt;</span>
+    <span class="nt">&lt;/properties&gt;</span>
+    <span class="nt">&lt;dependencyManagement&gt;</span>
+        <span class="nt">&lt;dependencies&gt;</span>
+            <span class="nt">&lt;dependency&gt;</span>
+                <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+                <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-web<span class="nt">&lt;/artifactId&gt;</span>
+                <span class="nt">&lt;version&gt;</span>1.5.10.RELEASE<span class="nt">&lt;/version&gt;</span>
+                <span class="nt">&lt;type&gt;</span>pom<span class="nt">&lt;/type&gt;</span>
+                <span class="nt">&lt;scope&gt;</span>import<span class="nt">&lt;/scope&gt;</span>
+            <span class="nt">&lt;/dependency&gt;</span>
+        <span class="nt">&lt;/dependencies&gt;</span>
+    <span class="nt">&lt;/dependencyManagement&gt;</span>
+    <span class="nt">&lt;modules&gt;</span>
+        <span class="nt">&lt;module&gt;</span>web<span class="nt">&lt;/module&gt;</span>
+    <span class="nt">&lt;/modules&gt;</span>
+    <span class="c">&lt;!-- 构建发布包，将tar,lib,resource,properties配置分离构建 --&gt;</span>
+    <span class="nt">&lt;build&gt;</span>
+        <span class="nt">&lt;plugins&gt;</span>
+            <span class="nt">&lt;plugin&gt;</span>
+                <span class="nt">&lt;groupId&gt;</span>org.apache.maven.plugins<span class="nt">&lt;/groupId&gt;</span>
+                <span class="nt">&lt;artifactId&gt;</span>maven-compiler-plugin<span class="nt">&lt;/artifactId&gt;</span>
+                <span class="nt">&lt;version&gt;</span>3.1<span class="nt">&lt;/version&gt;</span>
+                <span class="nt">&lt;configuration&gt;</span>
+                    <span class="nt">&lt;source&gt;</span>${jdk.version}<span class="nt">&lt;/source&gt;</span>
+                    <span class="nt">&lt;target&gt;</span>${jdk.version}<span class="nt">&lt;/target&gt;</span>
+                    <span class="nt">&lt;compilerVersion&gt;</span>${jdk.version}<span class="nt">&lt;/compilerVersion&gt;</span>
+                    <span class="nt">&lt;encoding&gt;</span>UTF-8<span class="nt">&lt;/encoding&gt;</span>
+                <span class="nt">&lt;/configuration&gt;</span>
+            <span class="nt">&lt;/plugin&gt;</span>
+            <span class="c">&lt;!-- 构建jar包--&gt;</span>
+            <span class="nt">&lt;plugin&gt;</span>
+                <span class="nt">&lt;groupId&gt;</span>org.apache.maven.plugins<span class="nt">&lt;/groupId&gt;</span>
+                <span class="nt">&lt;artifactId&gt;</span>maven-jar-plugin<span class="nt">&lt;/artifactId&gt;</span>
+                <span class="nt">&lt;version&gt;</span>3.2.0<span class="nt">&lt;/version&gt;</span>
+                <span class="nt">&lt;configuration&gt;</span>
+                    <span class="nt">&lt;excludes&gt;</span>
+                        <span class="nt">&lt;exclude&gt;</span>*.properties<span class="nt">&lt;/exclude&gt;</span>
+                        <span class="nt">&lt;exclude&gt;</span>*.yml<span class="nt">&lt;/exclude&gt;</span>
+                    <span class="nt">&lt;/excludes&gt;</span>
+                    <span class="nt">&lt;archive&gt;</span>
+                        <span class="nt">&lt;manifest&gt;</span>
+                            <span class="c">&lt;!-- 为依赖包添加路径, 这些路径会写在MANIFEST文件的Class-Path下 --&gt;</span>
+                            <span class="nt">&lt;mainClass&gt;</span>com.jltechcn.core.SpringApplications<span class="nt">&lt;/mainClass&gt;</span>
+                            <span class="nt">&lt;addClasspath&gt;</span>true<span class="nt">&lt;/addClasspath&gt;</span>
+                            <span class="nt">&lt;classpathPrefix&gt;</span>lib/<span class="nt">&lt;/classpathPrefix&gt;</span>
+                            <span class="c">&lt;!-- 打包时 MANIFEST.MF文件不记录的时间戳版本 --&gt;</span>
+                            <span class="nt">&lt;useUniqueVersions&gt;</span>false<span class="nt">&lt;/useUniqueVersions&gt;</span>
+                        <span class="nt">&lt;/manifest&gt;</span>
+                        <span class="nt">&lt;manifestEntries&gt;</span>
+                            <span class="c">&lt;!-- 在Class-Path下添加配置文件的路径 --&gt;</span>
+                            <span class="nt">&lt;Class-Path&gt;</span>resources/<span class="nt">&lt;/Class-Path&gt;</span>
+                        <span class="nt">&lt;/manifestEntries&gt;</span>
+                    <span class="nt">&lt;/archive&gt;</span>
+                <span class="nt">&lt;/configuration&gt;</span>
+            <span class="nt">&lt;/plugin&gt;</span>
+            <span class="c">&lt;!-- 构建resources文件 --&gt;</span>
+            <span class="nt">&lt;plugin&gt;</span>
+                <span class="nt">&lt;groupId&gt;</span>org.apache.maven.plugins<span class="nt">&lt;/groupId&gt;</span>
+                <span class="nt">&lt;artifactId&gt;</span>maven-resources-plugin<span class="nt">&lt;/artifactId&gt;</span>
+                <span class="nt">&lt;version&gt;</span>3.2.0<span class="nt">&lt;/version&gt;</span>
+                <span class="nt">&lt;executions&gt;</span>
+                    <span class="nt">&lt;execution&gt;</span>
+                        <span class="nt">&lt;id&gt;</span>copy-properties<span class="nt">&lt;/id&gt;</span>
+                        <span class="nt">&lt;phase&gt;</span>process-sources<span class="nt">&lt;/phase&gt;</span>
+                        <span class="nt">&lt;goals&gt;</span>
+                            <span class="nt">&lt;goal&gt;</span>copy-resources<span class="nt">&lt;/goal&gt;</span>
+                        <span class="nt">&lt;/goals&gt;</span>
+                        <span class="nt">&lt;configuration&gt;</span>
+                            <span class="nt">&lt;outputDirectory&gt;</span>${basedir}/target/resources<span class="nt">&lt;/outputDirectory&gt;</span>
+                            <span class="nt">&lt;resources&gt;</span>
+                                <span class="nt">&lt;resource&gt;</span>
+                                    <span class="nt">&lt;directory&gt;</span>${basedir}/src/main/resources<span class="nt">&lt;/directory&gt;</span>
+                                <span class="nt">&lt;/resource&gt;</span>
+                            <span class="nt">&lt;/resources&gt;</span>
+                        <span class="nt">&lt;/configuration&gt;</span>
+                    <span class="nt">&lt;/execution&gt;</span>
+                <span class="nt">&lt;/executions&gt;</span>
+            <span class="nt">&lt;/plugin&gt;</span>
+            <span class="c">&lt;!-- 构建依赖包文件 --&gt;</span>
+            <span class="nt">&lt;plugin&gt;</span>
+                <span class="nt">&lt;groupId&gt;</span>org.apache.maven.plugins<span class="nt">&lt;/groupId&gt;</span>
+                <span class="nt">&lt;artifactId&gt;</span>maven-dependency-plugin<span class="nt">&lt;/artifactId&gt;</span>
+                <span class="nt">&lt;executions&gt;</span>
+                    <span class="nt">&lt;execution&gt;</span>
+                        <span class="nt">&lt;id&gt;</span>copy<span class="nt">&lt;/id&gt;</span>
+                        <span class="nt">&lt;phase&gt;</span>package<span class="nt">&lt;/phase&gt;</span>
+                        <span class="nt">&lt;goals&gt;</span>
+                            <span class="nt">&lt;goal&gt;</span>copy-dependencies<span class="nt">&lt;/goal&gt;</span>
+                        <span class="nt">&lt;/goals&gt;</span>
+                        <span class="nt">&lt;configuration&gt;</span>
+                            <span class="nt">&lt;outputDirectory&gt;</span>target/lib/<span class="nt">&lt;/outputDirectory&gt;</span>
+                        <span class="nt">&lt;/configuration&gt;</span>
+                    <span class="nt">&lt;/execution&gt;</span>
+                <span class="nt">&lt;/executions&gt;</span>
+            <span class="nt">&lt;/plugin&gt;</span>
+        <span class="nt">&lt;/plugins&gt;</span>
+    <span class="nt">&lt;/build&gt;</span>
+<span class="nt">&lt;/project&gt;</span>
+</code></pre></div>
+
+<p>第二步：在idea中Terminal控制台执行maven打包命令</p>
+<div class="highlight"><pre><span></span><code>mvn clean package -Dmaven.test.skip<span class="o">=</span><span class="nb">true</span>
+</code></pre></div>
+
+<p>命令执行完毕后，在target目录下生成了jar包、config、lib三部分，如下图：</p>
+<p><img alt="img" src="pics/818973-20180418115150124-1436025812.png" /></p>
+<p>第三步：使用xftp将jar包上传到服务器/usr/local/springboot-helloworld/deploy目录下</p>
+<p><img alt="img" src="pics/818973-20180418115436856-2138612713.png" /></p>
+<p>第四步：运行jar包</p>
+<p>先切换到jar包所在目录：</p>
+<div class="highlight"><pre><span></span><code>cd /usr/local/springboot-helloworld/deploy/
+</code></pre></div>
+
+<p>springboot默认启动端口为8080，为了测试分开打包后可以修改配置文件，在application.properties文件中修改启动端口为3003</p>
+<p><img alt="image-20200909183747347" src="pics/image-20200909183747347.png" /></p>
+<p>运行jar:</p>
+<div class="highlight"><pre><span></span><code>java -jar springboot-helloworld-0.0.1-SNAPSHOT.jar
+</code></pre></div>
+
+<p>在控制台可以看到启动端口变成了3003，如下图Tomcat started on port(s):3003：</p>
+<p><img alt="image-20200909183650494" src="pics/image-20200909183650494.png" /></p>
+<p>第五步：创建数据库对应的应用账号</p>
+<h3 id="_1">更改权限<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
+<p>使用grant all privileges on来更改用户对应某些库的远程权限</p>
+<h4 id="_2">语法模板<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h4>
+<p>grant all privileges on 库名.表名 to '用户名'@'IP地址' identified by '密码' with grant option;
+flush privileges;</p>
+<h4 id="_3">注：<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h4>
+<p>库名:要远程访问的数据库名称,所有的数据库使用“<em>”
+表名:要远程访问的数据库下的表的名称，所有的表使用“</em>”
+用户名:要赋给远程访问权限的用户名称
+IP地址:可以远程访问的电脑的IP地址，所有的地址使用“%”
+密码:要赋给远程访问权限的用户对应使用的密码</p>
+<div class="highlight"><pre><span></span><code><span class="n">mysql</span><span class="o">&gt;</span> <span class="k">create</span> <span class="k">user</span> <span class="s1">&#39;springuser&#39;</span><span class="o">@</span><span class="s1">&#39;%&#39;</span> <span class="n">identified</span> <span class="k">by</span> <span class="s1">&#39;password123&#39;</span><span class="p">;</span> <span class="c1">-- Creates the user</span>
+
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="k">grant</span> <span class="k">all</span> <span class="k">on</span> <span class="n">db_example</span><span class="p">.</span><span class="o">*</span> <span class="k">to</span> <span class="s1">&#39;springuser&#39;</span><span class="o">@</span><span class="s1">&#39;%&#39;</span><span class="p">;</span> <span class="c1">-- Gives all privileges to the new user on the newly created database</span>
+
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="k">revoke</span> <span class="k">all</span> <span class="k">on</span> <span class="n">db_example</span><span class="p">.</span><span class="o">*</span> <span class="k">from</span> <span class="s1">&#39;springuser&#39;</span><span class="o">@</span><span class="s1">&#39;%&#39;</span><span class="p">;</span>
+
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="k">grant</span> <span class="k">select</span><span class="p">,</span> <span class="k">insert</span><span class="p">,</span> <span class="k">delete</span><span class="p">,</span> <span class="k">update</span><span class="p">,</span><span class="k">alter</span> <span class="k">on</span> <span class="n">db_example</span><span class="p">.</span><span class="o">*</span> <span class="k">to</span> <span class="s1">&#39;springuser&#39;</span><span class="o">@</span><span class="s1">&#39;%&#39;</span><span class="p">;</span>
+</code></pre></div>
+
+<p>给springuser 数据库db_example所有权限 </p>
+<div class="highlight"><pre><span></span><code><span class="n">mysql</span><span class="o">&gt;</span> <span class="k">grant</span> <span class="k">all</span> <span class="k">on</span> <span class="n">db_example</span><span class="p">.</span><span class="o">*</span> <span class="k">to</span> <span class="s1">&#39;springuser&#39;</span><span class="o">@</span><span class="s1">&#39;%&#39;</span><span class="p">;</span>
+</code></pre></div>
+
+<p>给root所有的权限 </p>
+<div class="highlight"><pre><span></span><code><span class="n">mysql</span><span class="o">&gt;</span> <span class="k">grant</span> <span class="k">all</span> <span class="k">privileges</span> <span class="k">on</span> <span class="o">*</span><span class="p">.</span><span class="o">*</span> <span class="k">to</span> <span class="n">root</span><span class="o">@</span><span class="ss">&quot;%&quot;</span> <span class="n">identified</span> <span class="k">by</span> <span class="ss">&quot;.&quot;</span><span class="p">;</span>
+<span class="n">Query</span> <span class="n">OK</span><span class="p">,</span> <span class="mi">0</span> <span class="k">rows</span> <span class="n">affected</span> <span class="p">(</span><span class="mi">0</span><span class="p">.</span><span class="mi">00</span> <span class="n">sec</span><span class="p">)</span>
+</code></pre></div>
+
+<p>备注：mysql5.7 客户端用IP访问，需要单独再给root设置一个与本地localhost不一样的登陆密码</p>
+<div class="highlight"><pre><span></span><code>mysql&gt; GRANT ALL ON *.* TO root@&#39;%&#39; IDENTIFIED BY &#39;123456&#39;
+mysql&gt; flush privileges;
+</code></pre></div>
+
+<p><img alt="image-20200909183424636" src="pics/image-20200909183424636.png" /></p>
+<p>修改源代码User实体类，添加tel字段，重新构建发布包，并只上传jar包到服务器，停止之前的进程，再次运行之后发现，数据字段已更新;</p>
+<p><img alt="image-20200909184134348" src="pics/image-20200909184134348.png" /></p>
+<p><img alt="image-20200909183452990" src="pics/image-20200909183452990.png" /></p>
+<p><strong>配置文件的优先级</strong></p>
+<p>application.properties和application.yml文件可以放在一下四个位置：</p>
+<ul>
+<li>外置，在相对于应用程序运行目录的/congfig子目录里。</li>
+<li>外置，在应用程序运行的目录里</li>
+<li>内置，在config包内</li>
+<li>内置，在Classpath根目录</li>
+</ul>
+<p>同样，这个列表按照优先级排序，也就是说，src/main/resources/config下application.properties覆盖src/main/resources下application.properties中相同的属性，如图： </p>
+<p><img alt="image-20201020165648067" src="pics/image-20201020165648067.png" /></p>
+<p>此外，如果你在相同优先级位置同时有application.properties和application.yml，那么application.yml里面的属性就会覆盖application.properties里的属性。</p>
+<h2 id="profile-">Profile-多环境配置<a class="headerlink" href="#profile-" title="Permanent link">&para;</a></h2>
+<p>当应用程序需要部署到不同运行环境时，一些配置细节通常会有所不同，最简单的比如日志，生产日志会将日志级别设置为WARN或更高级别，并将日志写入日志文件，而开发的时候需要日志级别为DEBUG，日志输出到控制台即可。
+如果按照以前的做法，就是每次发布的时候替换掉配置文件，这样太麻烦了，Spring Boot的Profile就给我们提供了解决方案，命令带上参数就搞定。</p>
+<p>这里我们来模拟一下，只是简单的修改端口来测试
+在Spring Boot中多环境配置文件名需要满足<code>application-{profile}.properties</code>的格式，其中<code>{profile}</code>对应你的环境标识，比如：</p>
+<ul>
+<li>
+<p>application-dev.properties：开发环境</p>
+</li>
+<li>
+<p>application-prod.properties：生产环境</p>
+</li>
+<li>
+<p>想要使用对应的环境，只需要在application.properties中使用spring.profiles.active属性来设置，值对应上面提到的{profile}，这里就是指dev、prod这2个。
+  当然你也可以用命令行启动的时候带上参数：</p>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code>java -jar xxx.jar --spring.profiles.active=dev
+</code></pre></div>
+
+<p>除了spring.profiles.active来激活一个或者多个profile之外，还可以用spring.profiles.include来叠加profile</p>
+<div class="highlight"><pre><span></span><code>spring.profiles.active: testdb  
+spring.profiles.include: proddb,prodmq
+</code></pre></div>
+
+<p>前台或后台运行</p>
+<div class="highlight"><pre><span></span><code>#前台运行，关闭窗口后退出
+java -jar /jar包路径
+
+#后台运行
+nohup java -jar /jar包路径
+
+#后台运行，指定启动日志记录文件
+nohup java -jar /jar包路径 &gt; /指定日志文件路径
+nohup java -jar jhdxweb-1.0-SNAPSHOT.jar &gt; ./logs/run.log 2&gt;&amp;1 &amp;
+</code></pre></div>
+
+<h3 id="_4">查看应用是否启动<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>netstat -nltp
+</code></pre></div>
+
+<p><img alt="image-20200919121237987" src="pics/image-20200919121237987.png" /></p>
+<div class="highlight"><pre><span></span><code> jps -l
+</code></pre></div>
+
+<p><img alt="image-20200919121344439" src="pics/image-20200919121344439.png" /></p>
+<h4 id="_5">一键启动脚本<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h4>
+<p>新建run_jar.sh文件,内容如下 </p>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+<span class="c1">#--------------------------------------------</span>
+<span class="c1"># Springboot项目jar包启动脚本</span>
+<span class="c1"># author：yichaoo</span>
+<span class="c1"># date:2020/9/18</span>
+<span class="c1"># description:</span>
+<span class="c1"># 脚本核心命令</span>
+<span class="c1"># 后台启动进程:nohup java -jar jhdxweb-1.0-SNAPSHOT.jar &gt; /logs/run.log 2&gt;&amp;1 &amp;</span>
+<span class="c1">#-------------------------------------------</span>
+<span class="c1">##### 定义全局变量和函数 开始 #####</span>
+
+<span class="c1">#定义全局变量jar包路径和项目名称(不带版本号)</span>
+<span class="c1">#根据实际项目名称和路径进行更改</span>
+<span class="nv">PROJECT_NAME</span><span class="o">=</span>jhdxweb
+<span class="nv">JAR_HOME</span><span class="o">=</span>/www/java_app/jhdx-web
+<span class="nv">RUN_LOG</span><span class="o">=</span>logs/run.log
+<span class="c1">#定义函数变量</span>
+<span class="c1">#获取当前项目jar包进程id</span>
+funGetJarPID<span class="o">(){</span>  
+   <span class="nv">pid</span><span class="o">=</span><span class="sb">`</span>jps -l <span class="p">|</span> grep <span class="si">${</span><span class="nv">PROJECT_NAME</span><span class="si">}</span> <span class="p">|</span> awk -F<span class="s2">&quot; &quot;</span> <span class="s1">&#39;{ print $1 }&#39;</span><span class="sb">`</span>    
+<span class="o">}</span>
+
+<span class="c1">##### 全局变量配置区 结束  #####</span>
+
+<span class="nb">echo</span> <span class="s2">&quot;================begin=====================&quot;</span>
+<span class="nb">echo</span> <span class="s2">&quot;starting.....&quot;</span>
+funGetJarPID
+<span class="nb">echo</span> <span class="s2">&quot;[INFO] 找到项目</span><span class="si">${</span><span class="nv">PROJECT_NAME</span><span class="si">}</span><span class="s2">的jar包进程</span><span class="si">${</span><span class="nv">pid</span><span class="si">}</span><span class="s2">&quot;</span>
+
+<span class="k">while</span> <span class="o">[</span> <span class="si">${</span><span class="nv">pid</span><span class="si">}</span> <span class="o">]</span> 
+<span class="k">do</span>
+    <span class="nb">echo</span> <span class="s2">&quot;[INFO] 正在结束项目</span><span class="si">${</span><span class="nv">PROJECT_NAME</span><span class="si">}</span><span class="s2">的jar包进程ID:</span><span class="si">${</span><span class="nv">pid</span><span class="si">}</span><span class="s2">.....&quot;</span>
+    <span class="k">if</span> <span class="o">[</span> <span class="si">${</span><span class="nv">pid</span><span class="si">}</span> <span class="o">]</span> 
+    <span class="k">then</span>
+        <span class="nb">kill</span> -2 <span class="si">${</span><span class="nv">pid</span><span class="si">}</span>
+    <span class="k">fi</span>
+    funGetJarPID
+<span class="k">done</span>
+<span class="nb">echo</span> <span class="s2">&quot;[INFO] 进程已结束&quot;</span>
+
+<span class="nb">echo</span> <span class="s2">&quot;[INFO] 开始重新运行</span><span class="si">${</span><span class="nv">JAR_HOME</span><span class="si">}</span><span class="s2">目录下</span><span class="si">${</span><span class="nv">PROJECT_NAME</span><span class="si">}</span><span class="s2">*.jar包&quot;</span>
+nohup java -jar <span class="si">${</span><span class="nv">JAR_HOME</span><span class="si">}</span>/<span class="si">${</span><span class="nv">PROJECT_NAME</span><span class="si">}</span>*.jar &gt; <span class="si">${</span><span class="nv">JAR_HOME</span><span class="si">}</span>/<span class="si">${</span><span class="nv">RUN_LOG</span><span class="si">}</span> <span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span> <span class="p">&amp;</span>
+<span class="c1">#如果命令执行成功，返回结果0</span>
+<span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> <span class="o">==</span> <span class="m">0</span> <span class="o">]</span>
+<span class="k">then</span>
+    <span class="k">until</span> <span class="o">[</span> <span class="si">${</span><span class="nv">pid</span><span class="si">}</span> <span class="o">]</span> 
+    <span class="k">do</span>
+        funGetJarPID
+        <span class="nb">echo</span> <span class="s2">&quot;[INFO] jar包进程创建中....&quot;</span>
+    <span class="k">done</span>    
+    <span class="nb">echo</span> <span class="s2">&quot;[INFO] 进程已创建PID：</span><span class="si">${</span><span class="nv">pid</span><span class="si">}</span><span class="s2">&quot;</span>  
+    <span class="nb">echo</span> <span class="s2">&quot;[INFO] 正在启动应用程序....&quot;</span>
+    <span class="k">until</span> <span class="o">[</span>  -n <span class="s2">&quot;</span><span class="nv">$tomcat_running_port</span><span class="s2">&quot;</span> <span class="o">]</span>
+    <span class="k">do</span>
+        <span class="nv">tail_info</span><span class="o">=</span><span class="sb">`</span>tail -2 <span class="si">${</span><span class="nv">JAR_HOME</span><span class="si">}</span>/<span class="si">${</span><span class="nv">RUN_LOG</span><span class="si">}</span> <span class="p">|</span> awk -F<span class="s2">&quot; - &quot;</span> <span class="s1">&#39;{print $2}&#39;</span><span class="sb">`</span>
+        <span class="nv">tomcat_running_port</span><span class="o">=</span><span class="sb">`</span>cat <span class="si">${</span><span class="nv">JAR_HOME</span><span class="si">}</span>/<span class="si">${</span><span class="nv">RUN_LOG</span><span class="si">}</span> <span class="p">|</span> grep <span class="s1">&#39;Tomcat started&#39;</span> <span class="p">|</span> awk -F<span class="s2">&quot; - &quot;</span> <span class="s1">&#39;{print $2}&#39;</span><span class="sb">`</span> 
+        <span class="nb">echo</span> <span class="s2">&quot;[INFO] </span><span class="si">${</span><span class="nv">tail_info</span><span class="si">}</span><span class="s2">...&quot;</span> 
+        sleep 2s
+    <span class="k">done</span>  
+
+    <span class="nb">echo</span> <span class="s2">&quot;[INFO] 成功运行项目</span><span class="si">${</span><span class="nv">PROJECT_NAME</span><span class="si">}</span><span class="s2">的jar包:</span><span class="si">${</span><span class="nv">tomcat_running_port</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="nb">echo</span> <span class="s2">&quot;All success!&quot;</span>
+<span class="k">else</span>
+   <span class="nb">echo</span> <span class="s2">&quot;[ERROR] 进程创建失败!&quot;</span>
+<span class="k">fi</span>
+<span class="nb">echo</span> <span class="s2">&quot;================end=====================&quot;</span>
+</code></pre></div>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href="02JavaWeb%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%E5%88%B0tomcat.html" title="JavaWeb项目部署到tomcat" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  上一页
+                </span>
+                JavaWeb项目部署到tomcat
+              </div>
+            </div>
+          </a>
+        
+        
+          <a href="Maven.html" title="Welcome to Apache Maven" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  下一页
+                </span>
+                Welcome to Apache Maven
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2016 - 2020 LYC
+          </div>
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+  <div class="md-footer-social">
+    
+      
+      
+        
+        
+      
+      <a href="https://github.com/yichaoo" target="_blank" rel="noopener" title="github.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+      </a>
+    
+      
+      
+        
+        
+      
+      <a href="https://github.com/yichaoo" target="_blank" rel="noopener" title="github.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M433.754 420.445c-11.526 1.393-44.86-52.741-44.86-52.741 0 31.345-16.136 72.247-51.051 101.786 16.842 5.192 54.843 19.167 45.803 34.421-7.316 12.343-125.51 7.881-159.632 4.037-34.122 3.844-152.316 8.306-159.632-4.037-9.045-15.25 28.918-29.214 45.783-34.415-34.92-29.539-51.059-70.445-51.059-101.792 0 0-33.334 54.134-44.859 52.741-5.37-.65-12.424-29.644 9.347-99.704 10.261-33.024 21.995-60.478 40.144-105.779C60.683 98.063 108.982.006 224 0c113.737.006 163.156 96.133 160.264 214.963 18.118 45.223 29.912 72.85 40.144 105.778 21.768 70.06 14.716 99.053 9.346 99.704z"/></svg>
+      </a>
+    
+      
+      
+        
+        
+      
+      <a href="https://github.com/yichaoo" target="_blank" rel="noopener" title="github.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M385.2 167.6c6.4 0 12.6.3 18.8 1.1C387.4 90.3 303.3 32 207.7 32 100.5 32 13 104.8 13 197.4c0 53.4 29.3 97.5 77.9 131.6l-19.3 58.6 68-34.1c24.4 4.8 43.8 9.7 68.2 9.7 6.2 0 12.1-.3 18.3-.8-4-12.9-6.2-26.6-6.2-40.8-.1-84.9 72.9-154 165.3-154zm-104.5-52.9c14.5 0 24.2 9.7 24.2 24.4 0 14.5-9.7 24.2-24.2 24.2-14.8 0-29.3-9.7-29.3-24.2.1-14.7 14.6-24.4 29.3-24.4zm-136.4 48.6c-14.5 0-29.3-9.7-29.3-24.2 0-14.8 14.8-24.4 29.3-24.4 14.8 0 24.4 9.7 24.4 24.4 0 14.6-9.6 24.2-24.4 24.2zM563 319.4c0-77.9-77.9-141.3-165.4-141.3-92.7 0-165.4 63.4-165.4 141.3S305 460.7 397.6 460.7c19.3 0 38.9-5.1 58.6-9.9l53.4 29.3-14.8-48.6C534 402.1 563 363.2 563 319.4zm-219.1-24.5c-9.7 0-19.3-9.7-19.3-19.6 0-9.7 9.7-19.3 19.3-19.3 14.8 0 24.4 9.7 24.4 19.3 0 10-9.7 19.6-24.4 19.6zm107.1 0c-9.7 0-19.3-9.7-19.3-19.6 0-9.7 9.7-19.3 19.3-19.3 14.5 0 24.4 9.7 24.4 19.3.1 10-9.9 19.6-24.4 19.6z"/></svg>
+      </a>
+    
+  </div>
+
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../assets/javascripts/vendor.d710d30a.min.js"></script>
+      <script src="../assets/javascripts/bundle.b39636ac.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "\u590d\u5236", "clipboard.copied": "\u5df2\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\uff0c\\u3002]+", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c"}</script>
+      
+      <script>
+        app = initialize({
+          base: "..",
+          features: ["navigation.tabs"],
+          search: Object.assign({
+            worker: "../assets/javascripts/worker/search.a68abb33.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+    
+  </body>
+</html>

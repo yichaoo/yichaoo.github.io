@@ -1,0 +1,1526 @@
+
+
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="DevOps从入门到躺坑">
+      
+      
+        <link rel="canonical" href="https://yichaoo.github.io/2.SpringBoot/Accessing%20Data%20with%20JPA.html">
+      
+      
+        <meta name="author" content="Liu Yichao">
+      
+      <link rel="shortcut icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.4.0">
+    
+    
+      
+        <title>Accessing Data with JPA - DevOps从入门到躺坑</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.fe0cca5b.min.css">
+      
+        <link rel="stylesheet" href="../assets/stylesheets/palette.a46bcfb3.min.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#7e57c2">
+      
+    
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="deep-purple" data-md-color-accent="deep-purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#accessing-data-with-jpa" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href="https://yichaoo.github.io/" title="DevOps从入门到躺坑" class="md-header-nav__button md-logo" aria-label="DevOps从入门到躺坑">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            DevOps从入门到躺坑
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              Accessing Data with JPA
+            
+          </span>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active">
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header-nav__source">
+        
+<a href="https://github.com/yichaoo/index/" title="前往 GitHub 仓库" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    yichaoo/index
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+        
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="https://yichaoo.github.io/" title="DevOps从入门到躺坑" class="md-nav__button md-logo" aria-label="DevOps从入门到躺坑">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    DevOps从入门到躺坑
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/yichaoo/index/" title="前往 GitHub 仓库" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    yichaoo/index
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-1" type="checkbox" id="nav-1">
+    
+    <label class="md-nav__link" for="nav-1">
+      1.Java
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="1.Java" data-md-level="1">
+      <label class="md-nav__title" for="nav-1">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        1.Java
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../1.Java/01MAVEN%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85%E5%8F%8A%E9%A1%B9%E7%9B%AE%E9%85%8D%E7%BD%AE.html" title="MAVEN环境安装及IDEA项目配置" class="md-nav__link">
+      MAVEN环境安装及IDEA项目配置
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../1.Java/02JavaWeb%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%E5%88%B0tomcat.html" title="JavaWeb项目部署到tomcat" class="md-nav__link">
+      JavaWeb项目部署到tomcat
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../1.Java/Deploy.html" title="Spring Boot打包部署篇" class="md-nav__link">
+      Spring Boot打包部署篇
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../1.Java/Maven.html" title="Welcome to Apache Maven" class="md-nav__link">
+      Welcome to Apache Maven
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      1.Linux
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="1.Linux" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        1.Linux
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../1.Linux/1.linux-demo.html" title="Linux 基本命令手册" class="md-nav__link">
+      Linux 基本命令手册
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      2.Docker
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="2.Docker" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        2.Docker
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2.Docker/01DockerHome.html" title="01.开始Docker" class="md-nav__link">
+      01.开始Docker
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2.Docker/02Docker%20Desktop-Windows.html" title="02.Docker Desktop-Window" class="md-nav__link">
+      02.Docker Desktop-Window
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2.Docker/Docker%20Tutorials%20and%20Labs.html" title="Docker Tutorials and Labs" class="md-nav__link">
+      Docker Tutorials and Labs
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2.Docker/Docker-Start-Windows.html" title="Get started with Docker for Windows" class="md-nav__link">
+      Get started with Docker for Windows
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2.Docker/Play%20with%20Docker%20Classroom.html" title="Play with Docker Classroom" class="md-nav__link">
+      Play with Docker Classroom
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3-6" type="checkbox" id="nav-3-6">
+    
+    <label class="md-nav__link" for="nav-3-6">
+      Docker For Developers
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Docker For Developers" data-md-level="2">
+      <label class="md-nav__title" for="nav-3-6">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        Docker For Developers
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2.Docker/Docker-For-Developers/01Docker%20for%20Beginners%20-%20Linux.html" title="Docker for Beginners - Linux" class="md-nav__link">
+      Docker for Beginners - Linux
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2.Docker/Docker-For-Developers/02Application%20Containerization%20and%20Microservice%20Orchestration.html" title="Application Containerization and Microservice Orchestration" class="md-nav__link">
+      Application Containerization and Microservice Orchestration
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3-7" type="checkbox" id="nav-3-7">
+    
+    <label class="md-nav__link" for="nav-3-7">
+      笔记
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="笔记" data-md-level="2">
+      <label class="md-nav__title" for="nav-3-7">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        笔记
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2.Docker/%E7%AC%94%E8%AE%B0/%E6%9C%9D%E5%A4%95%E7%AC%94%E8%AE%B0.html" title="朝夕笔记" class="md-nav__link">
+      朝夕笔记
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3-8" type="checkbox" id="nav-3-8">
+    
+    <label class="md-nav__link" for="nav-3-8">
+      踩坑记录
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="踩坑记录" data-md-level="2">
+      <label class="md-nav__title" for="nav-3-8">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        踩坑记录
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2.Docker/%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95/CentOS7%20%E5%AE%B9%E5%99%A8%E7%8E%AF%E5%A2%83%E5%88%A0%E9%99%A4%E9%BB%98%E8%AE%A4%E7%BD%91%E6%A1%A5Docker0%EF%BC%8C%E9%87%87%E7%94%A8%E8%87%AA%E5%AE%9A%E4%B9%89%E7%BD%91%E6%A1%A5%E8%BF%9B%E8%A1%8C%E9%80%9A%E8%AE%AF.html" title="CentOS7 容器环境删除默认网桥Docker0，采用自定义网桥进行通讯" class="md-nav__link">
+      CentOS7 容器环境删除默认网桥Docker0，采用自定义网桥进行通讯
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" checked>
+    
+    <label class="md-nav__link" for="nav-4">
+      2.SpringBoot
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="2.SpringBoot" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        2.SpringBoot
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="index.html" title="Spring目录" class="md-nav__link">
+      Spring目录
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Accessing Data with JPA
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 9h14V7H3v2m0 4h14v-2H3v2m0 4h14v-2H3v2m16 0h2v-2h-2v2m0-10v2h2V7h-2m0 6h2v-2h-2v2z"/></svg>
+        </span>
+      </label>
+    
+    <a href="Accessing%20Data%20with%20JPA.html" title="Accessing Data with JPA" class="md-nav__link md-nav__link--active">
+      Accessing Data with JPA
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-you-will-build" class="md-nav__link">
+    What You Will build
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-you-need" class="md-nav__link">
+    What You need
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-complete-this-guide" class="md-nav__link">
+    How to complete this guide
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#starting-with-spring-initializr" class="md-nav__link">
+    Starting with Spring Initializr
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#define-a-simple-entity" class="md-nav__link">
+    Define a Simple Entity
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create-simple-queries" class="md-nav__link">
+    Create Simple Queries
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create-an-application-class" class="md-nav__link">
+    Create an Application Class
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#build-an-executable-jar" class="md-nav__link">
+    Build an executable JAR
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    Summary
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#see-also" class="md-nav__link">
+    See Also
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="QuickStart.html" title="Spring Quickstart Guide" class="md-nav__link">
+      Spring Quickstart Guide
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+    
+    <label class="md-nav__link" for="nav-5">
+      3.K8S
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="3.K8S" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        3.K8S
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../3.K8S/home.html" title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
+    
+    <label class="md-nav__link" for="nav-6">
+      4.CI&CD
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="4.CI&CD" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        4.CI&CD
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../4.CI%26CD/Jenkins.html" title="Jenkins" class="md-nav__link">
+      Jenkins
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
+    
+    <label class="md-nav__link" for="nav-7">
+      文档附录
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="文档附录" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        文档附录
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../%E6%96%87%E6%A1%A3%E9%99%84%E5%BD%95/index.html" title="Markdown介绍" class="md-nav__link">
+      Markdown介绍
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../%E6%96%87%E6%A1%A3%E9%99%84%E5%BD%95/00Markdown%E6%95%99%E7%A8%8B.html" title="Markdown教程" class="md-nav__link">
+      Markdown教程
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../%E6%96%87%E6%A1%A3%E9%99%84%E5%BD%95/01Mkdocs%E4%BB%8B%E7%BB%8D.html" title="MkDocs介绍" class="md-nav__link">
+      MkDocs介绍
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../%E6%96%87%E6%A1%A3%E9%99%84%E5%BD%95/02MkDocs%E5%AE%98%E7%BD%91.html" title="MkDocs官网" class="md-nav__link">
+      MkDocs官网
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../%E6%96%87%E6%A1%A3%E9%99%84%E5%BD%95/03MkDocConfigration.html" title="MkDoc Configuration" class="md-nav__link">
+      MkDoc Configuration
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../%E6%96%87%E6%A1%A3%E9%99%84%E5%BD%95/04Material%20for%20MkDocs%20Getting%20started.html" title="Material for MkDocs Getting started" class="md-nav__link">
+      Material for MkDocs Getting started
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../%E6%96%87%E6%A1%A3%E9%99%84%E5%BD%95/05%E6%90%AD%E5%BB%BAGitPages.html" title="基于mkdocs-material搭建个人静态博客(含支持的markdown语法)" class="md-nav__link">
+      基于mkdocs-material搭建个人静态博客(含支持的markdown语法)
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../%E6%96%87%E6%A1%A3%E9%99%84%E5%BD%95/06CMD%20Markdown.html" title="欢迎使用 Cmd Markdown 编辑阅读器" class="md-nav__link">
+      欢迎使用 Cmd Markdown 编辑阅读器
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../%E6%96%87%E6%A1%A3%E9%99%84%E5%BD%95/%E9%99%84%E5%BD%95%EF%BC%9A%E5%88%9B%E5%A7%8B%E4%BA%BA%20John%20Gruber%20%E7%9A%84%20Markdown%20%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95%E8%AF%B4%E6%98%8E.html" title="附录：创始人 John Gruber 的 Markdown 基础语法说明" class="md-nav__link">
+      附录：创始人 John Gruber 的 Markdown 基础语法说明
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-you-will-build" class="md-nav__link">
+    What You Will build
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-you-need" class="md-nav__link">
+    What You need
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-complete-this-guide" class="md-nav__link">
+    How to complete this guide
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#starting-with-spring-initializr" class="md-nav__link">
+    Starting with Spring Initializr
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#define-a-simple-entity" class="md-nav__link">
+    Define a Simple Entity
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create-simple-queries" class="md-nav__link">
+    Create Simple Queries
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create-an-application-class" class="md-nav__link">
+    Create an Application Class
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#build-an-executable-jar" class="md-nav__link">
+    Build an executable JAR
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    Summary
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#see-also" class="md-nav__link">
+    See Also
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/yichaoo/index/edit/master/docs/2.SpringBoot/Accessing Data with JPA.md" title="编辑此页" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                  
+                
+                
+                <h1 id="accessing-data-with-jpa">Accessing Data with JPA<a class="headerlink" href="#accessing-data-with-jpa" title="Permanent link">&para;</a></h1>
+<p>Accessing Data with JPA</p>
+<p>This guide walks you through the process of building an application that uses Spring Data JPA to store and retrieve data in a relational database.</p>
+<h2 id="what-you-will-build">What You Will build<a class="headerlink" href="#what-you-will-build" title="Permanent link">&para;</a></h2>
+<p>You will build an application that stores <code>Customer</code> POJOs (Plain Old Java Objects) in a memory-based database.</p>
+<h2 id="what-you-need">What You need<a class="headerlink" href="#what-you-need" title="Permanent link">&para;</a></h2>
+<ul>
+<li>About 15 minutes</li>
+<li>A favorite text editor or IDE</li>
+<li><a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">JDK 1.8</a> or later</li>
+<li><a href="http://www.gradle.org/downloads">Gradle 4+</a> or <a href="https://maven.apache.org/download.cgi">Maven 3.2+</a></li>
+<li>You can also import the code straight into your IDE:</li>
+<li><a href="https://spring.io/guides/gs/sts">Spring Tool Suite (STS)</a></li>
+<li><a href="https://spring.io/guides/gs/intellij-idea/">IntelliJ IDEA</a></li>
+</ul>
+<h2 id="how-to-complete-this-guide">How to complete this guide<a class="headerlink" href="#how-to-complete-this-guide" title="Permanent link">&para;</a></h2>
+<p>Like most Spring <a href="https://spring.io/guides">Getting Started guides</a>, you can start from scratch and complete each step or you can bypass basic setup steps that are already familiar to you. Either way, you end up with working code.</p>
+<p>To <strong>start from scratch</strong>, move on to <a href="https://spring.io/guides/gs/accessing-data-jpa/#scratch">Starting with Spring Initializr</a>.</p>
+<p>To <strong>skip the basics</strong>, do the following:</p>
+<ul>
+<li><a href="https://github.com/spring-guides/gs-accessing-data-jpa/archive/master.zip">Download</a> and unzip the source repository for this guide, or clone it using <a href="https://spring.io/understanding/Git">Git</a>: <code>git clone https://github.com/spring-guides/gs-accessing-data-jpa.git</code></li>
+<li>cd into <code>gs-accessing-data-jpa/initial</code></li>
+<li>Jump ahead to <a href="https://spring.io/guides/gs/accessing-data-jpa/#initial">Define a Simple Entity</a>.</li>
+</ul>
+<p><strong>When you finish</strong>, you can check your results against the code in <code>gs-accessing-data-jpa/complete</code>.</p>
+<h2 id="starting-with-spring-initializr">Starting with Spring Initializr<a class="headerlink" href="#starting-with-spring-initializr" title="Permanent link">&para;</a></h2>
+<p>For all Spring applications, you should start with the <a href="https://start.spring.io/">Spring Initializr</a>. The Initializr offers a fast way to pull in all the dependencies you need for an application and does a lot of the set up for you. This example needs the JPA and H2 dependencies.</p>
+<p>The following listing shows the <code>pom.xml</code> file created when you choose Maven:</p>
+<div class="highlight"><pre><span></span><code><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="nt">&lt;project</span> <span class="na">xmlns=</span><span class="s">&quot;http://maven.apache.org/POM/4.0.0&quot;</span> <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;modelVersion&gt;</span>4.0.0<span class="nt">&lt;/modelVersion&gt;</span>
+    <span class="nt">&lt;parent&gt;</span>
+        <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+        <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-parent<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;version&gt;</span>2.3.2.RELEASE<span class="nt">&lt;/version&gt;</span>
+        <span class="nt">&lt;relativePath/&gt;</span> <span class="c">&lt;!-- lookup parent from repository --&gt;</span>
+    <span class="nt">&lt;/parent&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>com.example<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>accessing-data-jpa<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>0.0.1-SNAPSHOT<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;name&gt;</span>accessing-data-jpa<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;description&gt;</span>Demo project for Spring Boot<span class="nt">&lt;/description&gt;</span>
+
+    <span class="nt">&lt;properties&gt;</span>
+        <span class="nt">&lt;java.version&gt;</span>1.8<span class="nt">&lt;/java.version&gt;</span>
+    <span class="nt">&lt;/properties&gt;</span>
+
+    <span class="nt">&lt;dependencies&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-data-jpa<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>com.h2database<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>h2<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;scope&gt;</span>runtime<span class="nt">&lt;/scope&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-test<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;scope&gt;</span>test<span class="nt">&lt;/scope&gt;</span>
+            <span class="nt">&lt;exclusions&gt;</span>
+                <span class="nt">&lt;exclusion&gt;</span>
+                    <span class="nt">&lt;groupId&gt;</span>org.junit.vintage<span class="nt">&lt;/groupId&gt;</span>
+                    <span class="nt">&lt;artifactId&gt;</span>junit-vintage-engine<span class="nt">&lt;/artifactId&gt;</span>
+                <span class="nt">&lt;/exclusion&gt;</span>
+            <span class="nt">&lt;/exclusions&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+    <span class="nt">&lt;/dependencies&gt;</span>
+
+    <span class="nt">&lt;build&gt;</span>
+        <span class="nt">&lt;plugins&gt;</span>
+            <span class="nt">&lt;plugin&gt;</span>
+                <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+                <span class="nt">&lt;artifactId&gt;</span>spring-boot-maven-plugin<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;/plugin&gt;</span>
+        <span class="nt">&lt;/plugins&gt;</span>
+    <span class="nt">&lt;/build&gt;</span>
+
+<span class="nt">&lt;/project&gt;</span>
+</code></pre></div>
+
+<p>The following listing shows the <code>build.gradle</code> file created when you choose Gradle:</p>
+<div class="highlight"><pre><span></span><code><span class="nf">plugins</span> <span class="err">{</span>
+    <span class="nf">id</span> <span class="err">&#39;</span><span class="no">org.springframework.boot</span><span class="err">&#39;</span> <span class="no">version</span> <span class="err">&#39;</span><span class="mi">2</span><span class="no">.3.2.RELEASE</span><span class="err">&#39;</span>
+    <span class="nf">id</span> <span class="err">&#39;</span><span class="no">io.spring.dependency-management</span><span class="err">&#39;</span> <span class="no">version</span> <span class="err">&#39;</span><span class="mi">1</span><span class="no">.0.8.RELEASE</span><span class="err">&#39;</span>
+    <span class="nf">id</span> <span class="err">&#39;</span><span class="no">java</span><span class="err">&#39;</span>
+<span class="err">}</span>
+
+<span class="nf">group</span> <span class="err">=</span> <span class="err">&#39;</span><span class="no">com.example</span><span class="err">&#39;</span>
+<span class="nf">version</span> <span class="err">=</span> <span class="err">&#39;</span><span class="mi">0</span><span class="no">.0.1-SNAPSHOT</span><span class="err">&#39;</span>
+<span class="nf">sourceCompatibility</span> <span class="err">=</span> <span class="err">&#39;</span><span class="mi">1</span><span class="no">.8</span><span class="err">&#39;</span>
+
+<span class="na">rep</span><span class="nf">ositories</span> <span class="err">{</span>
+    <span class="nf">mavenCentral</span><span class="p">()</span>
+<span class="err">}</span>
+
+<span class="nf">dependencies</span> <span class="err">{</span>
+    <span class="nf">implementation</span> <span class="err">&#39;</span><span class="no">org.springframework.boot</span><span class="p">:</span><span class="no">spring-boot-starter-data-jpa</span><span class="err">&#39;</span>
+    <span class="nf">runtimeOnly</span> <span class="err">&#39;</span><span class="no">com.h2database</span><span class="p">:</span><span class="no">h2</span><span class="err">&#39;</span>
+    <span class="nf">testImplementation</span><span class="p">(</span><span class="err">&#39;</span><span class="no">org.springframework.boot</span><span class="p">:</span><span class="no">spring-boot-starter-test</span><span class="err">&#39;</span><span class="p">)</span> <span class="err">{</span>
+        <span class="nf">exclude</span> <span class="no">group</span><span class="p">:</span> <span class="err">&#39;</span><span class="no">org.junit.vintage</span><span class="err">&#39;</span><span class="p">,</span> <span class="no">module</span><span class="p">:</span> <span class="err">&#39;</span><span class="no">junit-vintage-engine</span><span class="err">&#39;</span>
+    <span class="err">}</span>
+<span class="err">}</span>
+
+<span class="nf">test</span> <span class="err">{</span>
+    <span class="nf">useJUnitPlatform</span><span class="p">()</span>
+<span class="err">}</span>
+</code></pre></div>
+
+<h2 id="define-a-simple-entity">Define a Simple Entity<a class="headerlink" href="#define-a-simple-entity" title="Permanent link">&para;</a></h2>
+<p>In this example, you store <code>Customer</code> objects, each annotated as a JPA entity. The following listing shows the Customer class (in <code>src/main/java/com/example/accessingdatajpa/Customer.java</code>):</p>
+<div class="highlight"><pre><span></span><code><span class="kn">package</span> <span class="nn">com.example.accessingdatajpa</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">javax.persistence.Entity</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">javax.persistence.GeneratedValue</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">javax.persistence.GenerationType</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">javax.persistence.Id</span><span class="p">;</span>
+
+<span class="nd">@Entity</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Customer</span> <span class="p">{</span>
+
+  <span class="nd">@Id</span>
+  <span class="nd">@GeneratedValue</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="n">GenerationType</span><span class="p">.</span><span class="na">AUTO</span><span class="p">)</span>
+  <span class="kd">private</span> <span class="n">Long</span> <span class="n">id</span><span class="p">;</span>
+  <span class="kd">private</span> <span class="n">String</span> <span class="n">firstName</span><span class="p">;</span>
+  <span class="kd">private</span> <span class="n">String</span> <span class="n">lastName</span><span class="p">;</span>
+
+  <span class="kd">protected</span> <span class="nf">Customer</span><span class="p">()</span> <span class="p">{}</span>
+
+  <span class="kd">public</span> <span class="nf">Customer</span><span class="p">(</span><span class="n">String</span> <span class="n">firstName</span><span class="p">,</span> <span class="n">String</span> <span class="n">lastName</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="na">firstName</span> <span class="o">=</span> <span class="n">firstName</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="na">lastName</span> <span class="o">=</span> <span class="n">lastName</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="n">String</span> <span class="nf">toString</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">String</span><span class="p">.</span><span class="na">format</span><span class="p">(</span>
+        <span class="s">&quot;Customer[id=%d, firstName=&#39;%s&#39;, lastName=&#39;%s&#39;]&quot;</span><span class="p">,</span>
+        <span class="n">id</span><span class="p">,</span> <span class="n">firstName</span><span class="p">,</span> <span class="n">lastName</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="kd">public</span> <span class="n">Long</span> <span class="nf">getId</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">id</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="kd">public</span> <span class="n">String</span> <span class="nf">getFirstName</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">firstName</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="kd">public</span> <span class="n">String</span> <span class="nf">getLastName</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">lastName</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span><span class="n">COPY</span>
+</code></pre></div>
+
+<p>Here you have a <code>Customer</code> class with three attributes: <code>id</code>, <code>firstName</code>, and <code>lastName</code>. You also have two constructors. The default constructor exists only for the sake of JPA. You do not use it directly, so it is designated as <code>protected</code>. The other constructor is the one you use to create instances of <code>Customer</code> to be saved to the database.</p>
+<p>The <code>Customer</code> class is annotated with <code>@Entity</code>, indicating that it is a JPA entity. (Because no <code>@Table</code> annotation exists, it is assumed that this entity is mapped to a table named <code>Customer</code>.)</p>
+<p>The <code>Customer</code> object’s <code>id</code> property is annotated with <code>@Id</code> so that JPA recognizes it as the object’s ID. The <code>id</code> property is also annotated with <code>@GeneratedValue</code> to indicate that the ID should be generated automatically.</p>
+<p>The other two properties, <code>firstName</code> and <code>lastName</code>, are left unannotated. It is assumed that they are mapped to columns that share the same names as the properties themselves.</p>
+<p>The convenient <code>toString()</code> method print outs the customer’s properties.</p>
+<h2 id="create-simple-queries">Create Simple Queries<a class="headerlink" href="#create-simple-queries" title="Permanent link">&para;</a></h2>
+<p>Spring Data JPA focuses on using JPA to store data in a relational database. Its most compelling feature is the ability to create repository implementations automatically, at runtime, from a repository interface.</p>
+<p>To see how this works, create a repository interface that works with <code>Customer</code> entities as the following listing (in <code>src/main/java/com/example/accessingdatajpa/CustomerRepository.java</code>) shows:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">package</span> <span class="nn">com.example.accessingdatajpa</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">java.util.List</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">org.springframework.data.repository.CrudRepository</span><span class="p">;</span>
+
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">CustomerRepository</span> <span class="kd">extends</span> <span class="n">CrudRepository</span><span class="o">&lt;</span><span class="n">Customer</span><span class="p">,</span> <span class="n">Long</span><span class="o">&gt;</span> <span class="p">{</span>
+
+  <span class="n">List</span><span class="o">&lt;</span><span class="n">Customer</span><span class="o">&gt;</span> <span class="nf">findByLastName</span><span class="p">(</span><span class="n">String</span> <span class="n">lastName</span><span class="p">);</span>
+
+  <span class="n">Customer</span> <span class="nf">findById</span><span class="p">(</span><span class="kt">long</span> <span class="n">id</span><span class="p">);</span>
+<span class="p">}</span><span class="n">COPY</span>
+</code></pre></div>
+
+<p><code>CustomerRepository</code> extends the <code>CrudRepository</code> interface. The type of entity and ID that it works with, <code>Customer</code> and <code>Long</code>, are specified in the generic parameters on <code>CrudRepository</code>. By extending <code>CrudRepository</code>, <code>CustomerRepository</code> inherits several methods for working with <code>Customer</code> persistence, including methods for saving, deleting, and finding <code>Customer</code> entities.</p>
+<p>Spring Data JPA also lets you define other query methods by declaring their method signature. For example, <code>CustomerRepository</code> includes the <code>findByLastName()</code> method.</p>
+<p>In a typical Java application, you might expect to write a class that implements <code>CustomerRepository</code>. However, that is what makes Spring Data JPA so powerful: You need not write an implementation of the repository interface. Spring Data JPA creates an implementation when you run the application.</p>
+<p>Now you can wire up this example and see what it looks like!</p>
+<h2 id="create-an-application-class">Create an Application Class<a class="headerlink" href="#create-an-application-class" title="Permanent link">&para;</a></h2>
+<p>Spring Initializr creates a simple class for the application. The following listing shows the class that Initializr created for this example (in <code>src/main/java/com/example/accessingdatajpa/AccessingDataJpaApplication.java</code>):</p>
+<div class="highlight"><pre><span></span><code><span class="kn">package</span> <span class="nn">com.example.accessingdatajpa</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">org.springframework.boot.SpringApplication</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.boot.autoconfigure.SpringBootApplication</span><span class="p">;</span>
+
+<span class="nd">@SpringBootApplication</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">AccessingDataJpaApplication</span> <span class="p">{</span>
+
+  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">SpringApplication</span><span class="p">.</span><span class="na">run</span><span class="p">(</span><span class="n">AccessingDataJpaApplication</span><span class="p">.</span><span class="na">class</span><span class="p">,</span> <span class="n">args</span><span class="p">);</span>
+  <span class="p">}</span>
+
+<span class="p">}</span><span class="n">COPY</span>
+</code></pre></div>
+
+<p><code>@SpringBootApplication</code> is a convenience annotation that adds all of the following:</p>
+<ul>
+<li><code>@Configuration</code>: Tags the class as a source of bean definitions for the application context.</li>
+<li><code>@EnableAutoConfiguration</code>: Tells Spring Boot to start adding beans based on classpath settings, other beans, and various property settings. For example, if <code>spring-webmvc</code> is on the classpath, this annotation flags the application as a web application and activates key behaviors, such as setting up a <code>DispatcherServlet</code>.</li>
+<li><code>@ComponentScan</code>: Tells Spring to look for other components, configurations, and services in the <code>com/example</code> package, letting it find the controllers.</li>
+</ul>
+<p>The <code>main()</code> method uses Spring Boot’s <code>SpringApplication.run()</code> method to launch an application. Did you notice that there was not a single line of XML? There is no <code>web.xml</code> file, either. This web application is 100% pure Java and you did not have to deal with configuring any plumbing or infrastructure.</p>
+<p>Now you need to modify the simple class that the Initializr created for you. To get output (to the console, in this example), you need to set up a logger. Then you need to set up some data and use it to generate output. The following listing shows the finished <code>AccessingDataJpaApplication</code> class (in <code>src/main/java/com/example/accessingdatajpa/AccessingDataJpaApplication.java</code>):</p>
+<div class="highlight"><pre><span></span><code><span class="kn">package</span> <span class="nn">com.example.accessingdatajpa</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">org.slf4j.Logger</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.slf4j.LoggerFactory</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.boot.CommandLineRunner</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.boot.SpringApplication</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.boot.autoconfigure.SpringBootApplication</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.context.annotation.Bean</span><span class="p">;</span>
+
+<span class="nd">@SpringBootApplication</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">AccessingDataJpaApplication</span> <span class="p">{</span>
+
+  <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">Logger</span> <span class="n">log</span> <span class="o">=</span> <span class="n">LoggerFactory</span><span class="p">.</span><span class="na">getLogger</span><span class="p">(</span><span class="n">AccessingDataJpaApplication</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
+
+  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">SpringApplication</span><span class="p">.</span><span class="na">run</span><span class="p">(</span><span class="n">AccessingDataJpaApplication</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="nd">@Bean</span>
+  <span class="kd">public</span> <span class="n">CommandLineRunner</span> <span class="nf">demo</span><span class="p">(</span><span class="n">CustomerRepository</span> <span class="n">repository</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">{</span>
+      <span class="c1">// save a few customers</span>
+      <span class="n">repository</span><span class="p">.</span><span class="na">save</span><span class="p">(</span><span class="k">new</span> <span class="n">Customer</span><span class="p">(</span><span class="s">&quot;Jack&quot;</span><span class="p">,</span> <span class="s">&quot;Bauer&quot;</span><span class="p">));</span>
+      <span class="n">repository</span><span class="p">.</span><span class="na">save</span><span class="p">(</span><span class="k">new</span> <span class="n">Customer</span><span class="p">(</span><span class="s">&quot;Chloe&quot;</span><span class="p">,</span> <span class="s">&quot;O&#39;Brian&quot;</span><span class="p">));</span>
+      <span class="n">repository</span><span class="p">.</span><span class="na">save</span><span class="p">(</span><span class="k">new</span> <span class="n">Customer</span><span class="p">(</span><span class="s">&quot;Kim&quot;</span><span class="p">,</span> <span class="s">&quot;Bauer&quot;</span><span class="p">));</span>
+      <span class="n">repository</span><span class="p">.</span><span class="na">save</span><span class="p">(</span><span class="k">new</span> <span class="n">Customer</span><span class="p">(</span><span class="s">&quot;David&quot;</span><span class="p">,</span> <span class="s">&quot;Palmer&quot;</span><span class="p">));</span>
+      <span class="n">repository</span><span class="p">.</span><span class="na">save</span><span class="p">(</span><span class="k">new</span> <span class="n">Customer</span><span class="p">(</span><span class="s">&quot;Michelle&quot;</span><span class="p">,</span> <span class="s">&quot;Dessler&quot;</span><span class="p">));</span>
+
+      <span class="c1">// fetch all customers</span>
+      <span class="n">log</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;Customers found with findAll():&quot;</span><span class="p">);</span>
+      <span class="n">log</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;-------------------------------&quot;</span><span class="p">);</span>
+      <span class="k">for</span> <span class="p">(</span><span class="n">Customer</span> <span class="n">customer</span> <span class="p">:</span> <span class="n">repository</span><span class="p">.</span><span class="na">findAll</span><span class="p">())</span> <span class="p">{</span>
+        <span class="n">log</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="n">customer</span><span class="p">.</span><span class="na">toString</span><span class="p">());</span>
+      <span class="p">}</span>
+      <span class="n">log</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">);</span>
+
+      <span class="c1">// fetch an individual customer by ID</span>
+      <span class="n">Customer</span> <span class="n">customer</span> <span class="o">=</span> <span class="n">repository</span><span class="p">.</span><span class="na">findById</span><span class="p">(</span><span class="mi">1L</span><span class="p">);</span>
+      <span class="n">log</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;Customer found with findById(1L):&quot;</span><span class="p">);</span>
+      <span class="n">log</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;--------------------------------&quot;</span><span class="p">);</span>
+      <span class="n">log</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="n">customer</span><span class="p">.</span><span class="na">toString</span><span class="p">());</span>
+      <span class="n">log</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">);</span>
+
+      <span class="c1">// fetch customers by last name</span>
+      <span class="n">log</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;Customer found with findByLastName(&#39;Bauer&#39;):&quot;</span><span class="p">);</span>
+      <span class="n">log</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;--------------------------------------------&quot;</span><span class="p">);</span>
+      <span class="n">repository</span><span class="p">.</span><span class="na">findByLastName</span><span class="p">(</span><span class="s">&quot;Bauer&quot;</span><span class="p">).</span><span class="na">forEach</span><span class="p">(</span><span class="n">bauer</span> <span class="o">-&gt;</span> <span class="p">{</span>
+        <span class="n">log</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="n">bauer</span><span class="p">.</span><span class="na">toString</span><span class="p">());</span>
+      <span class="p">});</span>
+      <span class="c1">// for (Customer bauer : repository.findByLastName(&quot;Bauer&quot;)) {</span>
+      <span class="c1">//  log.info(bauer.toString());</span>
+      <span class="c1">// }</span>
+      <span class="n">log</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">);</span>
+    <span class="p">};</span>
+  <span class="p">}</span>
+
+<span class="p">}</span><span class="n">COPY</span>
+</code></pre></div>
+
+<p>The <code>AccessingDataJpaApplication</code> class includes a <code>demo()</code> method that puts the <code>CustomerRepository</code> through a few tests. First, it fetches the <code>CustomerRepository</code> from the Spring application context. Then it saves a handful of <code>Customer</code> objects, demonstrating the <code>save()</code> method and setting up some data to work with. Next, it calls <code>findAll()</code> to fetch all <code>Customer</code> objects from the database. Then it calls <code>findById()</code> to fetch a single <code>Customer</code> by its ID. Finally, it calls <code>findByLastName()</code> to find all customers whose last name is "Bauer". The <code>demo()</code> method returns a <code>CommandLineRunner</code> bean that automatically runs the code when the application launches.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>By default, Spring Boot enables JPA repository support and looks in the package (and its subpackages) where <code>@SpringBootApplication</code> is located. If your configuration has JPA repository interface definitions located in a package that is not visible, you can point out alternate packages by using <code>@EnableJpaRepositories</code> and its type-safe <code>basePackageClasses=MyRepository.class</code> parameter.</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="build-an-executable-jar">Build an executable JAR<a class="headerlink" href="#build-an-executable-jar" title="Permanent link">&para;</a></h2>
+<p>You can run the application from the command line with Gradle or Maven. You can also build a single executable JAR file that contains all the necessary dependencies, classes, and resources and run that. Building an executable jar makes it easy to ship, version, and deploy the service as an application throughout the development lifecycle, across different environments, and so forth.</p>
+<p>If you use Gradle, you can run the application by using <code>./gradlew bootRun</code>. Alternatively, you can build the JAR file by using <code>./gradlew build</code> and then run the JAR file, as follows:</p>
+<div class="highlight"><pre><span></span><code>java -jar build/libs/gs-accessing-data-jpa-0.1.0.jar
+</code></pre></div>
+
+<p>If you use Maven, you can run the application by using <code>./mvnw spring-boot:run</code>. Alternatively, you can build the JAR file with <code>./mvnw clean package</code> and then run the JAR file, as follows:</p>
+<div class="highlight"><pre><span></span><code>java -jar target/gs-accessing-data-jpa-0.1.0.jar
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th>The steps described here create a runnable JAR. You can also <a href="https://spring.io/guides/gs/convert-jar-to-war/">build a classic WAR file</a>.</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>When you run your application, you should see output similar to the following:</p>
+<div class="highlight"><pre><span></span><code>== Customers found with findAll():
+Customer[id=1, firstName=&#39;Jack&#39;, lastName=&#39;Bauer&#39;]
+Customer[id=2, firstName=&#39;Chloe&#39;, lastName=&#39;O&#39;Brian&#39;]
+Customer[id=3, firstName=&#39;Kim&#39;, lastName=&#39;Bauer&#39;]
+Customer[id=4, firstName=&#39;David&#39;, lastName=&#39;Palmer&#39;]
+Customer[id=5, firstName=&#39;Michelle&#39;, lastName=&#39;Dessler&#39;]
+
+== Customer found with findById(1L):
+Customer[id=1, firstName=&#39;Jack&#39;, lastName=&#39;Bauer&#39;]
+
+== Customer found with findByLastName(&#39;Bauer&#39;):
+Customer[id=1, firstName=&#39;Jack&#39;, lastName=&#39;Bauer&#39;]
+Customer[id=3, firstName=&#39;Kim&#39;, lastName=&#39;Bauer&#39;]
+</code></pre></div>
+
+<h2 id="summary">Summary<a class="headerlink" href="#summary" title="Permanent link">&para;</a></h2>
+<p>Congratulations! You have written a simple application that uses Spring Data JPA to save objects to and fetch them from a database, all without writing a concrete repository implementation.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>If you want to expose JPA repositories with a hypermedia-based RESTful front end with little effort, you might want to read <a href="https://spring.io/guides/gs/accessing-data-rest">Accessing JPA Data with REST</a>.</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="see-also">See Also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h2>
+<p>The following guides may also be helpful:</p>
+<ul>
+<li><a href="https://spring.io/guides/gs/accessing-data-rest">Accessing JPA Data with REST</a></li>
+<li><a href="https://spring.io/guides/gs/accessing-data-gemfire/">Accessing Data with Gemfire</a></li>
+<li><a href="https://spring.io/guides/gs/accessing-data-mongodb/">Accessing Data with MongoDB</a></li>
+<li><a href="https://spring.io/guides/gs/accessing-data-mysql/">Accessing data with MySQL</a></li>
+<li><a href="https://spring.io/guides/gs/accessing-data-neo4j/">Accessing Data with Neo4j</a></li>
+</ul>
+<p>Want to write a new guide or contribute to an existing one? Check out our <a href="https://github.com/spring-guides/getting-started-guides/wiki">contribution guidelines</a>.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>All guides are released with an ASLv2 license for the code, and an <a href="https://creativecommons.org/licenses/by-nd/3.0/">Attribution, NoDerivatives creative commons license</a> for the writing.</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href="index.html" title="Spring目录" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  上一页
+                </span>
+                Spring目录
+              </div>
+            </div>
+          </a>
+        
+        
+          <a href="QuickStart.html" title="Spring Quickstart Guide" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  下一页
+                </span>
+                Spring Quickstart Guide
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2016 - 2020 LYC
+          </div>
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+  <div class="md-footer-social">
+    
+      
+      
+        
+        
+      
+      <a href="https://github.com/yichaoo" target="_blank" rel="noopener" title="github.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+      </a>
+    
+      
+      
+        
+        
+      
+      <a href="https://github.com/yichaoo" target="_blank" rel="noopener" title="github.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M433.754 420.445c-11.526 1.393-44.86-52.741-44.86-52.741 0 31.345-16.136 72.247-51.051 101.786 16.842 5.192 54.843 19.167 45.803 34.421-7.316 12.343-125.51 7.881-159.632 4.037-34.122 3.844-152.316 8.306-159.632-4.037-9.045-15.25 28.918-29.214 45.783-34.415-34.92-29.539-51.059-70.445-51.059-101.792 0 0-33.334 54.134-44.859 52.741-5.37-.65-12.424-29.644 9.347-99.704 10.261-33.024 21.995-60.478 40.144-105.779C60.683 98.063 108.982.006 224 0c113.737.006 163.156 96.133 160.264 214.963 18.118 45.223 29.912 72.85 40.144 105.778 21.768 70.06 14.716 99.053 9.346 99.704z"/></svg>
+      </a>
+    
+      
+      
+        
+        
+      
+      <a href="https://github.com/yichaoo" target="_blank" rel="noopener" title="github.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M385.2 167.6c6.4 0 12.6.3 18.8 1.1C387.4 90.3 303.3 32 207.7 32 100.5 32 13 104.8 13 197.4c0 53.4 29.3 97.5 77.9 131.6l-19.3 58.6 68-34.1c24.4 4.8 43.8 9.7 68.2 9.7 6.2 0 12.1-.3 18.3-.8-4-12.9-6.2-26.6-6.2-40.8-.1-84.9 72.9-154 165.3-154zm-104.5-52.9c14.5 0 24.2 9.7 24.2 24.4 0 14.5-9.7 24.2-24.2 24.2-14.8 0-29.3-9.7-29.3-24.2.1-14.7 14.6-24.4 29.3-24.4zm-136.4 48.6c-14.5 0-29.3-9.7-29.3-24.2 0-14.8 14.8-24.4 29.3-24.4 14.8 0 24.4 9.7 24.4 24.4 0 14.6-9.6 24.2-24.4 24.2zM563 319.4c0-77.9-77.9-141.3-165.4-141.3-92.7 0-165.4 63.4-165.4 141.3S305 460.7 397.6 460.7c19.3 0 38.9-5.1 58.6-9.9l53.4 29.3-14.8-48.6C534 402.1 563 363.2 563 319.4zm-219.1-24.5c-9.7 0-19.3-9.7-19.3-19.6 0-9.7 9.7-19.3 19.3-19.3 14.8 0 24.4 9.7 24.4 19.3 0 10-9.7 19.6-24.4 19.6zm107.1 0c-9.7 0-19.3-9.7-19.3-19.6 0-9.7 9.7-19.3 19.3-19.3 14.5 0 24.4 9.7 24.4 19.3.1 10-9.9 19.6-24.4 19.6z"/></svg>
+      </a>
+    
+  </div>
+
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../assets/javascripts/vendor.d710d30a.min.js"></script>
+      <script src="../assets/javascripts/bundle.b39636ac.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "\u590d\u5236", "clipboard.copied": "\u5df2\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\uff0c\\u3002]+", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c"}</script>
+      
+      <script>
+        app = initialize({
+          base: "..",
+          features: ["navigation.tabs"],
+          search: Object.assign({
+            worker: "../assets/javascripts/worker/search.a68abb33.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+    
+  </body>
+</html>
